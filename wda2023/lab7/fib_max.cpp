@@ -37,7 +37,6 @@ int main(){
         string s;
         cin >> s;
         reverse(s.begin(), s.end());
-        int p = 1;
         for(int i =0 ; i < s.size(); i++){
             if(s[i] == '1'){
                 // cout << i << endl;
