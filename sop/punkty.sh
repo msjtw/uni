@@ -56,7 +56,7 @@ while [[ $# -gt 0 ]]; do
 	esac
 done
 if [[ ${#WORDS[*]} -eq 0 ]]; then
-	echo "Enter words, if you are done, press CTRL+D"
+	echo "Enter words, when you are done, press CTRL+D"
 	while read WORD; do
 		WORDS+=("${WORD,,}")
 	done
