@@ -1,0 +1,17 @@
+name
+iname
+maxdepth
+links
+ls 
+wholename
+type
+mtime, atime, ctime
+mmin, amin, cmin
+newer
+size {+-/}
+user
+group
+perm {+-/}
+-o, -a, !, /(, \)
+exec, ok
+print
