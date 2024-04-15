@@ -9,10 +9,7 @@ const int MX = 207;
 int flow[MX][MX];
 int used[MX][MX];
 
-vector<int> adj[MX];
-vector<int> radj[MX];
-
-bool bfs(int s, int lvl[], const int n){
+bool bfs(int s, const vector<int> adj[], const vector<int> radj[], int lvl[], const int n){
     queue<int> q;
     q.push(1);
     lvl[1] = 1;
@@ -35,12 +32,12 @@ bool bfs(int s, int lvl[], const int n){
     return lvl[n] > 0;
 }
 
-int dfs(int x, int val, const int lvl[], const int n){
+int dfs(int x, int val, const vector<int> adj[], const vector<int> radj[], const int lvl[], const int n){
     if(x == n)
         return val;
     for(int v : adj[x]){
         if(lvl[v] == lvl[x]+1){
-            int r = dfs(v, min(val, flow[x][v]-used[x][v]), lvl, n);
+            int r = dfs(v, min(val, flow[x][v]-used[x][v]), adj, radj, lvl, n);
             if(r > 0){
                 used[x][v] += r;
                 return r;
@@ -49,7 +46,7 @@ int dfs(int x, int val, const int lvl[], const int n){
     }
     for(int v : radj[x]){
         if(lvl[v] == lvl[x]+1){
-            int r = dfs(v, min(val, used[v][x]), lvl, n);
+            int r = dfs(v, min(val, used[v][x]), adj, radj, lvl, n);
             if(r > 0){
                 used[v][x] -= r;
                 return r;
@@ -70,10 +67,9 @@ int main(){
                 flow[i][k] = 0;
                 used[i][k] = 0;
             }
-            adj[i].clear();
-            radj[i].clear();
         }
-
+        vector<int> adj[MX];
+        vector<int> radj[MX];
         int n;
         cin >> n;
         for(int i = 1; i < n; i++){
@@ -95,8 +91,8 @@ int main(){
 
         int res = 0;
 
-        while(bfs(1, lvl, n)){
-            res += dfs(1, __INT_MAX__, lvl, n);
+        while(bfs(1, adj, radj, lvl, n)){
+            res += dfs(1, __INT_MAX__, adj, radj, lvl, n);
             for(int i = 0 ; i < MX; i++)
                 lvl[i] = 0;
         }

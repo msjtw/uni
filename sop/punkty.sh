@@ -1,12 +1,12 @@
 #!/bin/bash
 
 FILE="/usr/share/dict/words"
-WORDS=()
+declare -a WORDS
 COUNTWRONG=1
 PRINTWRONG=1
 
 function writeHelp() {
-    helptext=""
+    local helptext=""
     helptext+="default dictonary|$FILE\n"
     helptext+="-h, --help|show avalaiable options\n"
     helptext+="-d, --dir|change dictionary\n"
@@ -18,11 +18,12 @@ function writeHelp() {
 function calc() {
     local word=$1
     local -i score=0
-    declare -i -A value=(
+    local -i -A value=(
         [a]=1 [b]=3 [c]=3 [d]=2 [e]=1 [f]=4 [g]=2 [h]=4 [i]=1 [j]=8 [k]=5 [l]=1 [m]=3
         [n]=1 [o]=1 [p]=3 [q]=10 [r]=1 [s]=1 [t]=1 [u]=1 [v]=4 [w]=4 [x]=8 [y]=4 [z]=10 
     )
-    for (( idx = 0; idx < ${#word}; idx++ )); do
+    for (( idx = 0; idx < ${#word}; idx++ ));
+	do
         local -i p=value[${word:idx:1}]
         score+=${p}
     done
@@ -51,21 +52,21 @@ while [[ $# -gt 0 ]]; do
 			echo "Unknown option"
 			exit 1;;
 		*)
-			WORDS+=("${1,,}")
+			WORDS+=("${1,,?}")
 			shift;;
 	esac
 done
 if [[ ${#WORDS[*]} -eq 0 ]]; then
 	echo "Enter words, when you are done, press CTRL+D"
 	while read WORD; do
-		WORDS+=("${WORD,,}")
+		WORDS+=("${WORD,,?}")
 	done
 fi
 
 output='Word|IsValid|Points\n'
-for word in ${WORDS[*]}
+for word in ${WORDS[@]};
 do
-	if grep -qwi "${word}" "${FILE}"; then
+	if  grep -qwi "${word}" "${FILE}" ; then
 		isValid=1
 	else
 		isValid=0
