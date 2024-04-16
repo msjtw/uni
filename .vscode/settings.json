@@ -8,6 +8,7 @@
         "deque": "cpp",
         "string": "cpp",
         "vector": "cpp",
-        "tuple": "cpp"
+        "tuple": "cpp",
+        "*.tcc": "cpp"
     }
 }

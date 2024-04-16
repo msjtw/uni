@@ -13,6 +13,8 @@ ll used[MX][MX];
  
 bool vis[MX];
  
+int zzz = 1;
+
 bool bfs(int s, const vector<int> adj[], const vector<int> radj[], int lvl[], const int n){
     queue<int> q;
     q.push(1);
@@ -21,7 +23,7 @@ bool bfs(int s, const vector<int> adj[], const vector<int> radj[], int lvl[], co
         int p = q.front();
         q.pop();
         for(int v : adj[p]){
-            if(lvl[v] == 0 and flow[p][v] - used[p][v] > 0){
+            if(lvl[v] == 0 and (flow[p][v] - used[p][v]) > 0){
                 lvl[v] = lvl[p]+1;
                 q.push(v);
             }
@@ -43,7 +45,7 @@ int dfs(int x, ll val, const vector<int> adj[], const vector<int> radj[], const 
         return val;
     }
     for(int v : adj[x]){
-        if(lvl[v] == lvl[x]+1 and flow[x][v] - used[x][v] > 0 and !vis[v]){
+        if(lvl[v] == lvl[x]+1 and (flow[x][v] - used[x][v]) > 0 and !vis[v]){
             int r = dfs(v, min(val, flow[x][v]-used[x][v]), adj, radj, lvl, n);
             if(r > 0){
                 used[x][v] += r;
@@ -70,7 +72,7 @@ int main(){
 
     int p;
     cin >> p;
-    while(p --> 0){
+    for(; zzz <= p; zzz++){
         for(int i = 0; i < MX; i++){
             vis[i] = false;
             for(int k = 0; k < MX; k++){
@@ -98,6 +100,10 @@ int main(){
         }
 
         int lvl[MX];
+
+        for(int i = 0 ; i < MX; i++){
+            lvl[i] = 0;
+        }
     
         long long int res = 0;
     
