@@ -3,3 +3,4 @@ in.in
 debug.in
 out.out
 sop/dict.txt
+numerical_methods/interval_2.h
