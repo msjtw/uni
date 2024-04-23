@@ -1,14 +1,17 @@
-#include<iostream>
+#include <iostream>
+#include <stdfloat>
 #include <limits>
 #include <iomanip>
+#include <cmath>
+
 #include "interval.h"
 
 using namespace std;
 
 int main(){
-    long double xx;
-    cin >> xx;
+    string a;
+    cin >> a;
     Interval x;
-    x.read_float(xx);
+    x.read_string(a);
     return 0;
 }

@@ -2,21 +2,21 @@
 #define INTERVAL_H_
 
 #include<string>
+#include <limits>
+#include <iostream>
 
 class Interval{
     public:
-        bool read_float(long double);
-        bool read_interval(long double, long double);
+        bool read_string(std::string);
+        bool read_interval(std::string, std::string);
+        std::string to_string(_Float128, int);
+        friend std::ostream& operator<<(std::ostream& os, Interval& intrvl);
+        _Float128 left;
+        _Float128 right;
+
     private:
-        long double left;
-        long double right;
+        const int precision = std::numeric_limits<_Float128>::digits10;
 
-        long double upper_machine(long double);
-        long double lower_machine(long double);
-
-        std::string to_string(long double);
-
-        std::string string_add(std::string, int);
 };
 
 #endif //INTERVAL_H_
