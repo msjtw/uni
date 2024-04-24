@@ -1,22 +1,28 @@
+// msjtw 2024
+// https://github.com/msjtw
+
 #ifndef INTERVAL_H_
 #define INTERVAL_H_
 
 #include<string>
-#include <limits>
 #include <iostream>
 
 class Interval{
     public:
         bool read_string(std::string);
         bool read_interval(std::string, std::string);
-        std::string to_string(_Float128, int);
+        std::string to_string(_Float128, int n = 5000, char type = 'f');
         friend std::ostream& operator<<(std::ostream& os, Interval& intrvl);
-        _Float128 left;
-        _Float128 right;
+        Interval operator+(const Interval & intrvl);
+        Interval operator-(const Interval & intrvl);
+        Interval operator*(const Interval & intrvl);
+        Interval operator/(const Interval & intrvl);
 
     private:
-        const int precision = std::numeric_limits<_Float128>::digits10;
+        _Float128 left;
+        _Float128 right;
+        int cmp(std::string, std::string);
 
 };
 
-#endif //INTERVAL_H_
+#endif /* INTERVAL_H_ */
