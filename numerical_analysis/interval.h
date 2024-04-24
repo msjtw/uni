@@ -9,6 +9,8 @@
 
 class Interval{
     public:
+        Interval();
+        Interval(_Float128, _Float128);
         bool read_string(std::string);
         bool read_interval(std::string, std::string);
         std::string to_string(_Float128, int n = 5000, char type = 'f');

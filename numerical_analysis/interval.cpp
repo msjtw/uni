@@ -13,6 +13,16 @@
 
 using std::string;
 
+Interval::Interval(){
+    left = 0;
+    right = 0;
+}
+
+Interval::Interval(_Float128 _left, _Float128 _right){
+    left = _left;
+    right = _right;
+}
+
 bool Interval::read_string(std::string value){
     bool neg = false;
     if(value[0] == '-'){
@@ -145,16 +155,29 @@ Interval Interval::operator *(const Interval & intrvl) {
     a = left*intrvl.left;
     b = left*intrvl.right;
     c = right*intrvl.left;
-    c = right*intrvl.right;
+    d = right*intrvl.right;
     ret.left = std::min(std::min(std::min(a,b),c),d);
     std::fesetround(FE_UPWARD);
     a = left*intrvl.left;
     b = left*intrvl.right;
     c = right*intrvl.left;
-    c = right*intrvl.right;
-    ret.left = std::max(std::max(std::max(a,b),c),d);
+    d = right*intrvl.right;
+    ret.right = std::max(std::max(std::max(a,b),c),d);
     std::fesetround(FE_TONEAREST);
     return ret;
+}
+
+Interval Interval::operator /(const Interval & intrvl) {
+    if(intrvl.left <= 0 and intrvl.right >= 0)
+        throw std::runtime_error("Division by an interval containing 0.");
+    _Float128 _left, _right;
+    std::fesetround(FE_DOWNWARD);
+    _left = 1/intrvl.right;
+    std::fesetround(FE_UPWARD);
+    _right = 1/intrvl.left;
+    Interval ret(_left, _right);
+    std::cout << ret << std::endl;
+    return Interval(this->left, this->right)*ret; 
 }
 
 std::string Interval::to_string(_Float128 fp, int n, char type) {
