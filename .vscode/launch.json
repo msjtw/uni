@@ -6,7 +6,7 @@
   "configurations": [
     {
       "name": "Python: debug",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal",
@@ -57,6 +57,27 @@
         }
       ],
       "preLaunchTask": "C/C++: g++ build active file"
+    },
+    {
+      "name": "g++: debug Interval",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/zz_exe/${fileBasenameNoExtension}",
+      "args": [],
+      "stopAtEntry": true,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": false
+        }
+      ],
+      "preLaunchTask": "C/C++: g++ build interval"
     }
   ]
 }

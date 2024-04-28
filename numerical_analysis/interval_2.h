@@ -16,15 +16,13 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <cmath>
-#include <mpfr.h>
 #include <boost/lexical_cast.hpp>
 #include <string.h>
 #include <iomanip>
 #include <fstream>
 #include <float.h>
 #include <typeinfo>
-#include <mpfr.h>
-#include <mpreal.h>
+#include "/home/msjtw/Documents/uni/numerical_analysis/mpreal.h"
 
 using namespace std;
 using namespace mpfr;
@@ -92,7 +90,7 @@ public:
 	Interval();
 	Interval(Interval const &copy);
 	Interval(T a, T b);
-	virtual ~Interval();3
+	virtual ~Interval();
 	Interval& operator=(const Interval<T> i);
 	Interval operator+(const Interval<T> &i);
 	Interval operator-(const Interval<T> &i);
@@ -1338,9 +1336,7 @@ Interval<T> DISqr(const Interval<T> &x) {
 }
 
 template<typename T>
-inline Interval<T> Interval<T>::
-
-+(const Interval<T> &y) {
+inline Interval<T> Interval<T>::operator +(const Interval<T> &y) {
 	Interval<T> x(this->a, this->b);
 	Interval<T> r = { 0, 0 };
 	switch (mode) {

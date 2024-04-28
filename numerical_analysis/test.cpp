@@ -1,27 +1,18 @@
 #include <iostream>
-#include <stdfloat>
-#include <limits>
-#include <iomanip>
-#include <cmath>
 
 #include "interval.h"
 
 using namespace std;
 
+
 int main(){
-    string a, b;
-    cin >> a >> b;
-    Interval x, y;
-    x.read_string(a);
-    y.read_string(b);
-    
-    Interval z = x/y;
+    string s;
+    cin >> s;
+    Interval r;
+    r.read_float(s);
+    cout << r << endl;
+    cout << sqrt(r) << endl;
 
-    cout << z << endl;
-
-    cin >> a;
-    x.read_string(a);
-    cout << x;
 
     return 0;
-}
+}  
