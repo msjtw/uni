@@ -18,7 +18,8 @@
             friend Interval sqrt(const Interval &);
             friend Interval pow(const Interval &);
             friend Interval abs(const Interval &);
-            friend Interval sin(const Interval &);
+            friend Interval sin(Interval);
+            friend Interval cos(Interval);
 
             friend std::string to_string(const _Float128, int, char);
             friend std::ostream& operator<<(std::ostream&, const Interval&);
@@ -28,6 +29,8 @@
             Interval operator-(const Interval &);
             Interval operator*(const Interval &);
             Interval operator/(const Interval &);
+            bool operator<(const Interval &);
+            bool operator<=(const Interval &);
             
             
 

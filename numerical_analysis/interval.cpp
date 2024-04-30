@@ -195,6 +195,10 @@ Interval Interval::operator /(const Interval & intrvl) {
     return Interval(this->left, this->right)*ret; 
 }
 
+bool Interval::operator <(const Interval & intrvl) {
+    
+}
+
 std::string to_string(const _Float128 fp, const int n, const char type){
     char buf[11000];
     std::string buf2;
@@ -279,7 +283,7 @@ _Float128 sqrtf128(const _Float128 intrvl, const bool top){
         return a;
 };
 
-Interval sin(const Interval &intrvl){
+Interval sin(Interval intrvl){
     bool is_even, finished;
 	int k;
 	int st = 0;
@@ -368,4 +372,72 @@ Interval sin(const Interval &intrvl){
 	return w;
 }
 
+Interval cos(Interval intrvl){
+    Interval c, d, w, w1, x2;
+	int k, st;
+	bool is_even, finished;
 
+	c.left = 1;
+	c.right = 1;
+	w = c;
+	x2 = intrvl * intrvl;
+	k = 1;
+	is_even = true;
+	finished = false;
+	st = 0;
+
+	do {
+		d.left = k * (k + 1);
+		d.right = d.left;
+		c = (c *(x2/ d));
+		if (is_even) {
+			w1 = (w - c);
+		} else {
+			w1 = (w - c);
+		}
+		if ((w.left != 0) && (w.right != 0)) {
+			if (((abs(w.left - w1.left) / abs(w.left)) < 1e-18)
+					&& (abs(w.right - w1.right) / abs(w.right) < 1e-18))
+				finished = true;
+		} else {
+			if ((w.left == 0) && (w.right != 0)) {
+				if ((abs(w.left - w1.left) < 1e-18)
+						&& (abs(w.right - w1.right) / abs(w.right) < 1e-18)) {
+					finished = true;
+				}
+			} else if (w.left != 0) {
+				if ((abs(w.left - w1.left) / abs(w.left) < 1e-18)
+						&& (abs(w.right - w1.right) < 1e-18))
+					finished = true;
+			} else if ((abs(w.left - w1.left) < 1e-18) && (abs(w.right - w1.right) < 1e-18))
+				finished = true;
+
+		}
+		if (finished) {
+			if (w1.right > 1) {
+				w1.right = 1;
+				if (w1.left > 1)
+					w1.left = 1;
+			}
+			if (w1.left < -1) {
+				w1.left = -1;
+				if (w1.right < -1)
+					w1.right = -1;
+			}
+			return w1;
+		} else {
+			w = w1;
+			k = k + 2;
+			is_even = !is_even;
+		}
+
+	} while (!finished || (k > INT_MAX / 2));
+
+	if (!finished)
+		st = 2;
+
+	Interval r;
+	r.left = 0;
+	r.right = 0;
+	return r;
+}
