@@ -11,6 +11,7 @@
     class Interval{
         public:
             Interval();
+            Interval(std::string);
             Interval(_Float128, _Float128);
             bool read_float(std::string);
             bool read_interval(std::string, std::string);
@@ -25,14 +26,66 @@
             friend std::ostream& operator<<(std::ostream&, const Interval&);
 
 
-            Interval operator+(const Interval &);
-            Interval operator-(const Interval &);
-            Interval operator*(const Interval &);
-            Interval operator/(const Interval &);
-            bool operator<(const Interval &);
-            bool operator<=(const Interval &);
+            Interval operator+(const Interval &) const;
+            Interval operator-(const Interval &) const;
+            Interval operator*(const Interval &) const;
+            Interval operator/(const Interval &) const;
+            bool operator<(const Interval &) const;
+            inline bool operator>(const Interval &intrvl) const{
+                return !this->operator<(intrvl);
+            }
+            bool operator==(const Interval &) const;
+            bool operator<=(const Interval &) const;
             
-            
+            inline Interval operator+(int a) const{
+                return this->operator+(Interval(std::to_string(a)));
+            }
+            inline Interval operator-(int a) const{
+                return this->operator-(Interval(std::to_string(a)));
+            }
+            inline Interval operator*(int a) const{
+                return this->operator*(Interval(std::to_string(a)));
+            }
+            inline Interval operator/(int a) const{
+                return this->operator/(Interval(std::to_string(a)));
+            }
+            inline bool operator<(int a) const{
+                return this->operator<(Interval(std::to_string(a)));
+            }
+            inline bool operator>(int a) const{
+                return !this->operator<(Interval(std::to_string(a)));
+            }
+            inline bool operator==(int a) const{
+                return this->operator==(Interval(std::to_string(a)));
+            }
+            inline bool operator<=(int a) const{
+                return this->operator<=(Interval(std::to_string(a)));
+            }
+
+            friend Interval operator+(int a, const Interval &intrvl){
+                return intrvl + a;
+            }
+            friend Interval operator-(int a, const Interval &intrvl){
+                return intrvl - a;
+            }
+            friend Interval operator*(int a, const Interval &intrvl){
+                return intrvl * a;
+            }
+            friend Interval operator/(int a, const Interval &intrvl){
+                return intrvl / a;
+            }
+            friend bool operator<(int a, const Interval &intrvl){
+                return intrvl < a;
+            }
+            friend bool operator>(int a, const Interval &intrvl){
+                return !(intrvl < a);
+            }
+            friend bool operator==(int a, const Interval &intrvl){
+                return intrvl == a;
+            }
+            friend bool operator<=(int a, const Interval &intrvl){
+                return intrvl <= a;
+            }
 
         private:
             _Float128 left;

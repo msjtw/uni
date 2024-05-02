@@ -1,10 +1,13 @@
+#ifndef NWT_RAPH_H_
+#define NWT_RAPH_H_
+
 #include <iostream>
 #include <cmath>
 
-using namespace std;
-
-double newton_raphson(double x, double (*f)(double), double (*df)(double), double (*d2f)(double), int mit, double eps, double fatx, int it, int st){
-    double dfatx, d2fatx, p, v, w, xh, x1, x2;
+template<typename T>
+int newton_raphson(T &x, T (*f)(T), T (*df)(T), T (*d2f)(T),const int mit, const T eps, T &fatx, int &it){
+    int st;
+    T dfatx, d2fatx, p, v, w, xh, x1, x2;
     if(mit < 1){
         st = 1;
     }
@@ -44,12 +47,9 @@ double newton_raphson(double x, double (*f)(double), double (*df)(double), doubl
         }while(it == mit or st != 3);
     }
     if(st == 0 or st == 3){
-        return x;
         fatx = f(x);
     }
-    return 0;
+    return st;
 } 
 
-int main(){
-
-}
+#endif //  NWT_RAPH_H_

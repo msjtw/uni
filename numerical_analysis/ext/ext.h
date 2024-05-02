@@ -1,16 +1,12 @@
 // external_library.h
-#ifndef EXTERNAL_LIBRARY_H
-#define EXTERNAL_LIBRARY_H
+#ifndef EXT_H
+#define EXT_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "/home/msjtw/Documents/uni/numerical_analysis/interval.h"
 
 // Function prototype
-int externalFunction(int a, int b);
-
-#ifdef __cplusplus
-}
-#endif
+Interval f(Interval);
+Interval df(Interval);
+Interval d2f(Interval);
 
 #endif // EXTERNAL_LIBRARY_H

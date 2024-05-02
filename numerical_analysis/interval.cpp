@@ -19,6 +19,10 @@ Interval::Interval(){
     right = 0;
 }
 
+Interval::Interval(std::string value){
+    read_float(value);
+}
+
 Interval::Interval(_Float128 _left, _Float128 _right){
     left = _left;
     right = _right;
@@ -143,7 +147,7 @@ std::string scientificToFull(const std::string& scientificStr) {
     return oss.str();
 }
 
-Interval Interval::operator +(const Interval & intrvl) {
+Interval Interval::operator +(const Interval & intrvl) const{
     Interval ret;
     std::fesetround(FE_DOWNWARD);
     ret.left = left + intrvl.left;
@@ -153,7 +157,7 @@ Interval Interval::operator +(const Interval & intrvl) {
     return ret;
 }
 
-Interval Interval::operator -(const Interval & intrvl) {
+Interval Interval::operator -(const Interval & intrvl) const{
     Interval ret;
     std::fesetround(FE_DOWNWARD);
     ret.left = left - intrvl.left;
@@ -163,7 +167,7 @@ Interval Interval::operator -(const Interval & intrvl) {
     return ret;
 }
 
-Interval Interval::operator *(const Interval & intrvl) {
+Interval Interval::operator *(const Interval & intrvl) const{
     Interval ret;
     _Float128 a,b,c,d;
     std::fesetround(FE_DOWNWARD);
@@ -182,7 +186,7 @@ Interval Interval::operator *(const Interval & intrvl) {
     return ret;
 }
 
-Interval Interval::operator /(const Interval & intrvl) {
+Interval Interval::operator /(const Interval & intrvl) const{
     if(intrvl.left <= 0 and intrvl.right >= 0)
         throw std::runtime_error("Division by an interval containing 0.");
     _Float128 _left, _right;
@@ -195,7 +199,16 @@ Interval Interval::operator /(const Interval & intrvl) {
     return Interval(this->left, this->right)*ret; 
 }
 
-bool Interval::operator <(const Interval & intrvl) {
+bool Interval::operator ==(const Interval & intrvl) const{
+    if(left != intrvl.left)
+        return false;
+    if(right != intrvl.right){
+        return false;
+    }
+    return true;
+}
+
+bool Interval::operator <(const Interval & intrvl) const{
     
 }
 
