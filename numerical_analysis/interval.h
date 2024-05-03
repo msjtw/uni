@@ -36,7 +36,11 @@
             }
             bool operator==(const Interval &) const;
             bool operator<=(const Interval &) const;
-            
+            inline bool operator>=(const Interval &intrvl) const{
+                return !this->operator<=(intrvl);
+            }
+
+
             inline Interval operator+(int a) const{
                 return this->operator+(Interval(std::to_string(a)));
             }
@@ -61,6 +65,10 @@
             inline bool operator<=(int a) const{
                 return this->operator<=(Interval(std::to_string(a)));
             }
+            inline bool operator>=(int a) const{
+                return this->operator>=(Interval(std::to_string(a)));
+            }
+
 
             friend Interval operator+(int a, const Interval &intrvl){
                 return intrvl + a;
@@ -85,6 +93,9 @@
             }
             friend bool operator<=(int a, const Interval &intrvl){
                 return intrvl <= a;
+            }
+            friend bool operator>=(int a, const Interval &intrvl){
+                return intrvl >= a;
             }
 
         private:

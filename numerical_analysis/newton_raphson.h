@@ -44,7 +44,7 @@ int newton_raphson(T &x, T (*f)(T), T (*df)(T), T (*d2f)(T),const int mit, const
                     st = 0;
                 }
             }
-        }while(it == mit or st != 3);
+        }while(it != mit and st == 3);
     }
     if(st == 0 or st == 3){
         fatx = f(x);

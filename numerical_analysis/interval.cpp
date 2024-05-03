@@ -29,7 +29,7 @@ Interval::Interval(_Float128 _left, _Float128 _right){
 }
 
 bool Interval::read_float(std::string value){
-    value = scientificToFull(value);
+    // value = scientificToFull(value);
     bool neg = false;
     if(value[0] == '-'){
         neg = true;
@@ -55,8 +55,8 @@ bool Interval::read_float(std::string value){
 }
 
 bool Interval::read_interval(std::string _left, std::string _right){
-    _left = scientificToFull(_left);
-    _right = scientificToFull(_right);
+    // _left = scientificToFull(_left);
+    // _right = scientificToFull(_right);
     bool neg = false;
     if(_left[0] == '-'){
         neg = true;
@@ -135,16 +135,16 @@ int Interval::cmp(string a, string b){
 }
 
 std::string scientificToFull(const std::string& scientificStr) {
-    std::istringstream iss(scientificStr);
-    double number;
-    if (!(iss >> number)) {
-        // Failed to convert the string to a number
-        return "Invalid input";
-    }
+    // std::istringstream iss(scientificStr);
+    // _Float128 number;
+    // if (!(iss >> number)) {
+    //     // Failed to convert the string to a number
+    //     return "Invalid input";
+    // }
 
-    std::ostringstream oss;
-    oss << std::setprecision(5000) << number; // Set precision as needed
-    return oss.str();
+    // std::ostringstream oss;
+    // oss << std::setprecision(5000) << number; // Set precision as needed
+    // return oss.str();
 }
 
 Interval Interval::operator +(const Interval & intrvl) const{
@@ -209,7 +209,13 @@ bool Interval::operator ==(const Interval & intrvl) const{
 }
 
 bool Interval::operator <(const Interval & intrvl) const{
-    
+    _Float128 mid1 = (left+right)/2;
+    _Float128 mid2 = (intrvl.left+intrvl.right)/2;
+    return mid1 < mid2;
+}
+
+bool Interval::operator <=(const Interval & intrvl) const{
+    return *this < intrvl or *this == intrvl;
 }
 
 std::string to_string(const _Float128 fp, const int n, const char type){

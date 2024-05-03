@@ -1,35 +1,40 @@
 // main.cpp
 #include <iostream>
+#include "my_library.h"
 #include <dlfcn.h>
 
-typedef int (*ExternalFunction)(int, int);
-
 int main() {
-    std::string libraryPath;
-    std::cout << "Enter path to the external library: ";
-    std::cin >> libraryPath;
-
-    // Load the external library
-    void* handle = dlopen(libraryPath.c_str(), RTLD_LAZY);
+    void* handle = dlopen("./libmy_library.so", RTLD_LAZY);
     if (!handle) {
         std::cerr << "Cannot load library: " << dlerror() << '\n';
         return 1;
     }
 
-    // Get the function pointer
-    ExternalFunction externalFunction = (ExternalFunction)dlsym(handle, "externalFunction");
-    const char* dlsym_error = dlerror();
-    if (dlsym_error) {
-        std::cerr << "Cannot load symbol 'externalFunction': " << dlsym_error << '\n';
+    using CreateMyLibraryInstanceFunc = MyLibrary* (*)();
+    using DestroyMyLibraryInstanceFunc = void (*)(MyLibrary*);
+
+    CreateMyLibraryInstanceFunc createInstance = reinterpret_cast<CreateMyLibraryInstanceFunc>(
+        dlsym(handle, "createMyLibraryInstance"));
+    DestroyMyLibraryInstanceFunc destroyInstance = reinterpret_cast<DestroyMyLibraryInstanceFunc>(
+        dlsym(handle, "destroyMyLibraryInstance"));
+
+    if (!createInstance || !destroyInstance) {
+        std::cerr << "Cannot load factory functions\n";
         dlclose(handle);
         return 1;
     }
 
-    // Call the function
-    int result = externalFunction(5, 3);
+    MyLibrary* myLibrary = createInstance();
+    if (!myLibrary) {
+        std::cerr << "Failed to create instance\n";
+        dlclose(handle);
+        return 1;
+    }
+
+    int result = myLibrary->add(5, 3);
     std::cout << "Result: " << result << std::endl;
 
-    // Close the library
+    destroyInstance(myLibrary);
     dlclose(handle);
     return 0;
 }
