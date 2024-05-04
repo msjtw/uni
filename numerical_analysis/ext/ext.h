@@ -2,23 +2,19 @@
 #ifndef EXT_H
 #define EXT_H
 
-// #ifdef __cplusplus
-// extern "C" {
-// #endif
+typedef long double ld;
 
 #include "/home/msjtw/Documents/uni/numerical_analysis/interval.h"
 
 // Function prototype
 extern "C" {
     Interval f(Interval);
-
     Interval df(Interval);
-
     Interval d2f(Interval);
-}
 
-// #ifdef __cplusplus
-// }
-// #endif
+    ld ff(ld);
+    ld dff(ld);
+    ld d2ff(ld);
+}
 
 #endif // EXTERNAL_LIBRARY_H

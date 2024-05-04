@@ -29,7 +29,7 @@ Interval::Interval(_Float128 _left, _Float128 _right){
 }
 
 bool Interval::read_float(std::string value){
-    // value = scientificToFull(value);
+    value = sci_to_full(value);
     bool neg = false;
     if(value[0] == '-'){
         neg = true;
@@ -55,8 +55,8 @@ bool Interval::read_float(std::string value){
 }
 
 bool Interval::read_interval(std::string _left, std::string _right){
-    // _left = scientificToFull(_left);
-    // _right = scientificToFull(_right);
+    _left = sci_to_full(_left);
+    _right = sci_to_full(_right);
     bool neg = false;
     if(_left[0] == '-'){
         neg = true;
@@ -134,17 +134,38 @@ int Interval::cmp(string a, string b){
     return 1;
 }
 
-std::string scientificToFull(const std::string& scientificStr) {
-    // std::istringstream iss(scientificStr);
-    // _Float128 number;
-    // if (!(iss >> number)) {
-    //     // Failed to convert the string to a number
-    //     return "Invalid input";
-    // }
-
-    // std::ostringstream oss;
-    // oss << std::setprecision(5000) << number; // Set precision as needed
-    // return oss.str();
+std::string sci_to_full(std::string sci) {
+    if(sci.find('E') != string::npos){
+        sci[sci.find('E')] = 'e';
+    }
+    if(sci.find(',') != string::npos){
+        sci[sci.find(',')] = '.';
+    }
+    int p = sci.find('e');
+    if(p == string::npos)
+        return sci;
+    string num = sci.substr(0, p);
+    int pow = std::stoi(sci.substr(p+1));
+    if(num.find('.') == string::npos)
+        num += ".";
+    if(pow > 0){
+        for(int i = 0; i < pow; i++)
+            num += "0";
+        p = num.find('.');
+        for(int i = 0; i < pow; i++){
+            std::swap(num[p+i],num[p+i+1]);
+        }
+    }
+    else{
+        pow *= -1;
+        for(int i = 0; i < pow; i++)
+            num = "0" + num;
+        p = num.find('.');
+        for(int i = 0; i < pow; i++){
+            std::swap(num[p-i],num[p-i-1]);
+        }
+    }
+    return num;
 }
 
 Interval Interval::operator +(const Interval & intrvl) const{
@@ -271,14 +292,21 @@ Interval sqrt(const Interval &intrvl){
     return ret;
 }
 
-Interval pow(const Interval &intrvl){
-    Interval ret = abs(intrvl);
-    std::fesetround(FE_DOWNWARD);
-    ret.left *= ret.left;
-    std::fesetround(FE_UPWARD);
-    ret.right *= ret.right;
-    std::fesetround(FE_TONEAREST);
-    return ret;
+Interval pow(const Interval &intrvl, int _pow){
+    if(_pow == 0)
+        return Interval("1");
+    if(_pow & 1){
+        return pow(intrvl, _pow-1) * intrvl;
+    }
+    else{
+        Interval ret = abs(pow(intrvl, _pow >> 1));
+        std::fesetround(FE_DOWNWARD);
+        ret.left *= ret.left;
+        std::fesetround(FE_UPWARD);
+        ret.right *= ret.right;
+        std::fesetround(FE_TONEAREST);
+        return ret;
+    } 
 }
 
 _Float128 sqrtf128(const _Float128 intrvl, const bool top){

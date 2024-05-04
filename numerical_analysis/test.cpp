@@ -57,11 +57,12 @@ int main(){
     // cout << one << endl;
     // cout << f(one) << endl << df(one) << endl << d2f(one);
 
-    Interval res, fatx;
+    Interval res("-2.4"), fatx;
     int it;
-    int st = newton_raphson<Interval>(res,f, df, d2f ,1e6, Interval("1e-10"), fatx, it);
+    int st = newton_raphson<Interval>(res,f, df, d2f ,10, Interval("1e-16"), fatx, it);
 
     cout << res << endl;
+    cout << st << endl;
     cout << it;
     return 0;
 }  

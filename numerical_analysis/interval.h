@@ -17,7 +17,7 @@
             bool read_interval(std::string, std::string);
 
             friend Interval sqrt(const Interval &);
-            friend Interval pow(const Interval &);
+            friend Interval pow(const Interval &, int);
             friend Interval abs(const Interval &);
             friend Interval sin(Interval);
             friend Interval cos(Interval);
@@ -106,7 +106,7 @@
     };
 
     std::string to_string(const _Float128, const int n = 5000, const char type = 'f');
-    std::string scientificToFull(const std::string&);
+    std::string sci_to_full(std::string);
 
     inline Interval pi(){
         Interval r;
