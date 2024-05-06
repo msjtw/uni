@@ -3,8 +3,6 @@
 %%% Przykładowo:  student(jan,nowak_jeziorański,150000,2).                    %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-student(stanisław,fiedler,160250,1).
-
 next(świnoujście,kołobrzeg).
 next(świnoujście, szczecin).
 next(kołobrzeg,ustka).

@@ -3,8 +3,6 @@
 %%% Przykładowo:  student(jan,nowak_jeziorański,150000,2).                    %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-student(stanisław, fiedler, 160250, 1).
-
 pionowy(odcinek(punkt(X, Y1), punkt(X, Y2))).
 poziomy(odcinek(punkt(X1, Y), punkt(X2, Y))).
 

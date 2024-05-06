@@ -10,8 +10,6 @@
 %   /      \           /      \               /      \
 % Radek   Beata      Darek   Tomek         Jacek    Iwona
 
-student(stanisław,fiedler,160250,1).
-
 kobieta(maria).
 kobieta(ewa).
 kobieta(joanna).
