@@ -30,7 +30,9 @@ plus_minus([H|T], N) :- [H] = [+], plus_minus(T, A), N is A+1.
 plus_minus([H|T], N) :- [H] = [-], plus_minus(T, A), N is A-1.
 
 %zadanie 7
-wstawiaj(L,X,1,[X|L]).
+wstawiaj([],X,1,[X]).
+wstawiaj([T],X,1,[X,T]).
+wstawiaj([H|T],X,1,[X,H|T]).
 wstawiaj([H|T],X,I,[H|L1]) :- A is I-1, wstawiaj(T,X,A,L1).
 
 %zadanie 8
