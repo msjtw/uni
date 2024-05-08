@@ -1,0 +1,6 @@
+[submodule "numerical_analysis/gui/imgui"]
+	path = numerical_analysis/gui/imgui
+	url = https://github.com/ocornut/imgui.git
+[submodule "numerical_analysis/gui/glfw"]
+	path = numerical_analysis/gui/glfw
+	url = https://github.com/glfw/glfw

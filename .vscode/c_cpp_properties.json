@@ -4,7 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/**"
+                "/home/msjtw/Documents/uni/numerical_analysis/gui/glfw/include/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

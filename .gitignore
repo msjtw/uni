@@ -3,5 +3,6 @@ in.in
 debug.in
 out.out
 sop/dict.txt
+numerical_analysis/gui/glfw_build
 numerical_analysis/ext/libext.so
 numerical_analysis/interval_2.h
