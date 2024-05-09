@@ -24,7 +24,7 @@
 
 
 template<typename T>
-int newton_raphson(T &x, T (*f)(T), T (*df)(T), T (*d2f)(T),const int mit, const T eps, T &fatx, int &it){
+int newton_raphson(T &x, T (*f)(T), T (*df)(T), T (*d2f)(T),const int mit, const _Float128 eps, T &fatx, int &it){
     int st;
     T dfatx, d2fatx, p, v, w, xh, x1, x2;
     if(mit < 1){
@@ -58,7 +58,7 @@ int newton_raphson(T &x, T (*f)(T), T (*df)(T), T (*d2f)(T),const int mit, const
             if(v == 0){
                 st = 0;
             }
-            else if( abs(x-xh)/v <= eps ){
+            else if( abs(x-xh)/v < eps ){
                 st = 0;
             }
         }

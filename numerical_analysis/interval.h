@@ -40,6 +40,10 @@
                 return !this->operator<=(intrvl);
             }
 
+            bool operator<(const _Float128 &) const;
+            inline bool operator>(const _Float128 &val) const{
+                return !this->operator<(val);
+            }
 
             inline Interval operator+(int a) const{
                 return this->operator+(Interval(std::to_string(a)));
@@ -53,20 +57,8 @@
             inline Interval operator/(int a) const{
                 return this->operator/(Interval(std::to_string(a)));
             }
-            inline bool operator<(int a) const{
-                return this->operator<(Interval(std::to_string(a)));
-            }
-            inline bool operator>(int a) const{
-                return !this->operator<(Interval(std::to_string(a)));
-            }
             inline bool operator==(int a) const{
                 return this->operator==(Interval(std::to_string(a)));
-            }
-            inline bool operator<=(int a) const{
-                return this->operator<=(Interval(std::to_string(a)));
-            }
-            inline bool operator>=(int a) const{
-                return this->operator>=(Interval(std::to_string(a)));
             }
 
 
@@ -82,7 +74,7 @@
             friend Interval operator/(int a, const Interval &intrvl){
                 return intrvl / a;
             }
-            friend bool operator<(int a, const Interval &intrvl){
+            friend bool operator<(_Float128 a, const Interval &intrvl){
                 return intrvl < a;
             }
             friend bool operator>(int a, const Interval &intrvl){
@@ -90,12 +82,6 @@
             }
             friend bool operator==(int a, const Interval &intrvl){
                 return intrvl == a;
-            }
-            friend bool operator<=(int a, const Interval &intrvl){
-                return intrvl <= a;
-            }
-            friend bool operator>=(int a, const Interval &intrvl){
-                return intrvl >= a;
             }
 
         private:
@@ -105,7 +91,7 @@
 
     };
 
-    std::string to_string(const _Float128, const int n = 5000, const char type = 'f');
+    std::string to_string(const _Float128, const int n = 50, const char type = 'e');
     std::string sci_to_full(std::string);
 
     inline Interval pi(){

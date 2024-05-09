@@ -9,32 +9,38 @@ using namespace std;
 //load f, df and d2f functions
 template<typename T>
 int read_fuct(string path, T (*&f)(T), T (*&df)(T), T (*&d2f)(T)){
+    string suf = "f";
+    if(typeid(T) == typeid(Interval))
+        suf = "";
     void* handle = dlopen(path.c_str(), RTLD_LAZY);
     if (!handle) {
         std::cerr << "Cannot load library: " << dlerror() << '\n';
         return 1;
     }
 
-    f = (T (*)(T))dlsym(handle, "f");
+    string name = "f"+suf;
+    f = (T (*)(T))dlsym(handle, name.c_str());
     const char* dlsym_error = dlerror();
     if (dlsym_error) {
-        std::cerr << "Cannot load symbol 'f': " << dlsym_error << '\n';
+        std::cerr << "Cannot load symbol '" << suf << "f': " << dlsym_error << '\n';
         dlclose(handle);
         return 2;
     }
 
-    df = (T (*)(T))dlsym(handle, "df");
+    name = "df"+suf;
+    df = (T (*)(T))dlsym(handle, name.c_str());
     dlsym_error = dlerror();
     if (dlsym_error) {
-        std::cerr << "Cannot load symbol 'df': " << dlsym_error << '\n';
+        std::cerr << "Cannot load symbol '" << suf << "df': " << dlsym_error << '\n';
         dlclose(handle);
         return 2;
     }
 
-    d2f = (T (*)(T))dlsym(handle, "d2f");
+    name = "f"+suf;
+    d2f = (T (*)(T))dlsym(handle, name.c_str());
     dlsym_error = dlerror();
     if (dlsym_error) {
-        std::cerr << "Cannot load symbol 'd2f': " << dlsym_error << '\n';
+        std::cerr << "Cannot load symbol '" << suf << "d2f': " << dlsym_error << '\n';
         dlclose(handle);
         return 2;
     }
@@ -52,6 +58,11 @@ int main(){
     Interval (*d2f)(Interval);
     read_fuct<Interval>(libraryPath, f, df, d2f);
 
+    _Float128 (*ff)(_Float128);
+    _Float128 (*dff)(_Float128);
+    _Float128 (*d2ff)(_Float128);
+    read_fuct<_Float128>(libraryPath, ff, dff, d2ff);
+
     // Interval one;
     // one.read_float("1");
     // cout << one << endl;
@@ -59,7 +70,7 @@ int main(){
 
     Interval res("-2.4"), fatx;
     int it;
-    int st = newton_raphson<Interval>(res,f, df, d2f ,10, Interval("1e-16"), fatx, it);
+    int st = newton_raphson<Interval>(res,f, df, d2f ,10, 1e-16, fatx, it);
 
     cout << res << endl;
     cout << st << endl;

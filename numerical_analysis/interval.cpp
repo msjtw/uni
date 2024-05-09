@@ -35,7 +35,7 @@ bool Interval::read_float(std::string value){
         neg = true;
     }
     _Float128 fvalue = strtof128(value.c_str(), NULL);
-    int cmp_res =  cmp(value, to_string(fvalue));
+    int cmp_res =  cmp(value, to_string(fvalue, 5000, 'f'));
     if(cmp_res == 1){
         // value == fvalue
         left = fvalue;
@@ -62,7 +62,7 @@ bool Interval::read_interval(std::string _left, std::string _right){
         neg = true;
     }
     _Float128 f_left = strtof128(_left.c_str(), NULL);
-    int cmp_res = cmp(_left, to_string(f_left));
+    int cmp_res = cmp(_left, to_string(f_left, 5000, 'f'));
     if((cmp_res <= 1 and !neg) or (cmp_res >= 1 and neg)){
         // _left >= f_left
         left = f_left;
@@ -77,7 +77,7 @@ bool Interval::read_interval(std::string _left, std::string _right){
         neg = true;
     }
     _Float128 f_right = strtof128(_right.c_str(), NULL);
-    cmp_res = cmp(_right, to_string(f_right));
+    cmp_res = cmp(_right, to_string(f_right, 5000, 'f'));
     if((cmp_res >= 1 and !neg) or (cmp_res <= 1 and neg)){
         // _right <= f_right
         right = f_right;
@@ -239,6 +239,10 @@ bool Interval::operator <=(const Interval & intrvl) const{
     return *this < intrvl or *this == intrvl;
 }
 
+bool Interval::operator <(const _Float128 & val) const{
+    return right-left < val;
+}
+
 std::string to_string(const _Float128 fp, const int n, const char type){
     char buf[11000];
     std::string buf2;
@@ -249,7 +253,7 @@ std::string to_string(const _Float128 fp, const int n, const char type){
 }
 
 std::ostream& operator<<(std::ostream& os, const Interval& intrvl){
-    os << "[ " << to_string(intrvl.left, 50,'e') << ", " << to_string(intrvl.right, 50,'e') << " ]" << std::endl << to_string(intrvl.right-intrvl.left, 50,'e');
+    os << "[ " << to_string(intrvl.left) << ", " << to_string(intrvl.right) << " ]" << std::endl << to_string(intrvl.right-intrvl.left);
     return os;
 }
 
@@ -338,8 +342,7 @@ Interval sin(Interval intrvl){
 	Interval d, s, w, w1, x2, x, tmp;
 	Interval izero(0, 0);
 	string left, right;
-	_Float128 eps = 1e-30; //Interval<T>::GetEpsilon();
-    //std::cout << to_string(eps, 5000) << std::endl;
+	_Float128 eps = 1e-30; 
 	_Float128 diff = std::numeric_limits<_Float128>::max();
 	if (intrvl.left > intrvl.right)
 		st = 1;
