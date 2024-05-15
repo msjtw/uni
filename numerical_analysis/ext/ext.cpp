@@ -30,24 +30,22 @@ Interval d2f(Interval intrvl) {
 
 _Float128 ff(_Float128 x) {
     _Float128 ret;
-    ret = x*x*x;
-    ret = ret + (6 * x*x);
-    ret = ret + (10 * x);
-    ret = ret + -3;
+    ret = pow(x, 4); 
+    ret = ret + (-5 * pow(x, 2));
+    ret = ret + 4;
     return ret;
 }
 
 _Float128 dff(_Float128 x) {
     _Float128 ret;
-    ret = 3 * x*x;
-    ret = ret + (12 * x);
-    ret = ret + 10;
+    ret = 4 * pow(x, 3);
+    ret = ret + (-10 * x);
     return ret;
 }
 
 _Float128 d2ff(_Float128 x) {
     _Float128 ret;
-    ret = 6 * x;
-    ret = ret + 12;
+    ret = 12 * pow(x, 2);
+    ret = ret + -10;
     return ret;
 }

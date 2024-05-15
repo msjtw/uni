@@ -45,40 +45,43 @@ static void glfw_error_callback(int error, const char* description)
 //load f, df and d2f functions
 template<typename T>
 int read_fuct(string path, T (*&f)(T), T (*&df)(T), T (*&d2f)(T)){
-    string suf = "f";
-    if(typeid(T) == typeid(Interval))
-        suf = "";
     void* handle = dlopen(path.c_str(), RTLD_LAZY);
     if (!handle) {
         std::cerr << "Cannot load library: " << dlerror() << '\n';
         return 1;
     }
 
-    string name = "f"+suf;
+    string name;
+    string suf = "";
+    if (std::is_same<T, _Float128>::value){
+        suf = "f";
+    }
+    
+    name = "f" + suf;
     f = (T (*)(T))dlsym(handle, name.c_str());
     const char* dlsym_error = dlerror();
     if (dlsym_error) {
-        std::cerr << "Cannot load symbol '" << suf << "f': " << dlsym_error << '\n';
+        std::cerr << "Cannot load symbol 'f': " << dlsym_error << '\n';
         dlclose(handle);
         return 2;
     }
 
-    name = "df"+suf;
+    name = "df" + suf;
     df = (T (*)(T))dlsym(handle, name.c_str());
     dlsym_error = dlerror();
     if (dlsym_error) {
-        std::cerr << "Cannot load symbol '" << suf << "df': " << dlsym_error << '\n';
+        std::cerr << "Cannot load symbol 'df': " << dlsym_error << '\n';
         dlclose(handle);
-        return 3;
+        return 2;
     }
 
-    name = "f"+suf;
+    name = "d2f" + suf;
     d2f = (T (*)(T))dlsym(handle, name.c_str());
     dlsym_error = dlerror();
     if (dlsym_error) {
-        std::cerr << "Cannot load symbol '" << suf << "d2f': " << dlsym_error << '\n';
+        std::cerr << "Cannot load symbol 'd2f': " << dlsym_error << '\n';
         dlclose(handle);
-        return 4;
+        return 2;
     }
     return 0;
 }
@@ -156,19 +159,24 @@ int main(int, char**)
     //IM_ASSERT(font != nullptr);
 
     // Our state
-    bool show_demo_window = true;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
     static char path[TXTMX] = "/home/msjtw/Documents/uni/numerical_analysis/ext/libext.so";
     string libraryPath;
     static int load_status = -1;
     int calc_type = 0;
-    static char x[TXTMX], mit[TXTMX], eps[TXTMX], xupper[TXTMX], xlower[TXTMX];
+    static char x[TXTMX], mit[TXTMX], eps[TXTMX], xupper[TXTMX], xlower[TXTMX], epslower[TXTMX];
     Interval (*f)(Interval);
     Interval (*df)(Interval);
     Interval (*d2f)(Interval);
-    static _Float128 (*ff)(_Float128);
+    _Float128 (*ff)(_Float128);
     _Float128 (*dff)(_Float128);
     _Float128 (*d2ff)(_Float128);
+    int stat = -1;
+    Interval fx;
+    Interval fatx;
+    _Float128 ffx;
+    _Float128 ffatx;
+    int imit;
     
     // Main loop
 #ifdef __EMSCRIPTEN__
@@ -193,13 +201,16 @@ int main(int, char**)
         ImGui::NewFrame();
 
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-        if (show_demo_window)
-            ImGui::ShowDemoWindow(&show_demo_window);
+        // if (show_demo_window)
+        //     ImGui::ShowDemoWindow(&show_demo_window);
 
         // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
         {
-
-            ImGui::Begin("Newton Raphson");                          // Create a window called "Hello, world!" and append into it.
+            static bool use_work_area = true;
+            const ImGuiViewport* viewport = ImGui::GetMainViewport();
+            ImGui::SetNextWindowPos(use_work_area ? viewport->WorkPos : viewport->Pos);
+            ImGui::SetNextWindowSize(use_work_area ? viewport->WorkSize : viewport->Size);
+            ImGui::Begin("Newton Raphson", NULL, ImGuiWindowFlags_NoCollapse|ImGuiWindowFlags_NoMove);                          // Create a window called "Hello, world!" and append into it.
             ImGui::SeparatorText("Library path");
             ImGui::InputTextWithHint("##", "enter path to library containg functions", path, IM_ARRAYSIZE(path));
             ImGui::SameLine();
@@ -232,12 +243,14 @@ int main(int, char**)
                     ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), text.c_str());
                 }
             }
+
             if(load_status == 0){
                 ImGui::SeparatorText("Calculation Type");
 
                 ImGui::RadioButton("Float", &calc_type, 1); ImGui::SameLine();
                 ImGui::RadioButton("Point Interval", &calc_type, 2); ImGui::SameLine();
                 ImGui::RadioButton("Interval", &calc_type, 3);
+
 
                 if(calc_type == 1){
                     ImGui::Text("Float");
@@ -247,27 +260,66 @@ int main(int, char**)
                     ImGui::InputTextWithHint("##mit", "max number of iterations", mit, IM_ARRAYSIZE(mit)); ImGui::SameLine();
                     ImGui::SetNextItemWidth(ImGui::GetFontSize() * 20);
                     ImGui::InputTextWithHint("##eps", "desired epsilon", eps, IM_ARRAYSIZE(eps));
-                    int stat;
                     string sx(x);
                     string smit(mit);
-                    string seps(mit);
-                    static int clicked = 0;
+                    string seps(eps);
+
+                    int it;
+
                     if (ImGui::Button("Calculate") and !sx.empty() and !smit.empty() and !seps.empty()){
-                        clicked++;
-                    }
-                    if (clicked & 1){
-                        _Float128 fatx;
-                        int it;
-                        _Float128 fx = strtof128(x, NULL);
+                        ffx = strtof128(x, NULL);
                         _Float128 feps = strtof128(eps, NULL);
-                        int imit = std::stoi(string(mit));
-                        stat = newton_raphson<_Float128>(fx, ff, dff, d2ff, imit, feps, fatx, it);
-                        string res = to_string(fx);
-                        ImGui::Text("resault");
+                        imit = std::stoi(string(mit));
+                        stat = newton_raphson<_Float128>(ffx, ff, dff, d2ff, imit, feps, ffatx, it);
+                    }
+                    if(stat == 0){
+                        string res = to_string(ffx);
                         string stringstate;
                         stringstate = std::to_string(stat);
-                        ImGui::Text(stringstate.c_str());
+                        ImGui::Text("return status: "); ImGui::SameLine();
+                        ImGui::Text(stringstate.c_str()); ImGui::SameLine();
+                        ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Ok");
+                        ImGui::Text("x:    "); ImGui::SameLine();
                         ImGui::Text(res.c_str());
+                        ImGui::Text("f(x): "); ImGui::SameLine();
+                        string sfatx = to_string(ffatx);
+                        ImGui::Text(sfatx.c_str());
+                        ImGui::Text("iterations: "); ImGui::SameLine();
+                        string sit = std::to_string(it);
+                        ImGui::Text(sit.c_str());
+                    }
+                    if(stat == 3){
+                        string res = to_string(ffx);
+                        string stringstate;
+                        stringstate = std::to_string(stat);
+                        ImGui::Text("return status: "); ImGui::SameLine();
+                        ImGui::Text(stringstate.c_str()); ImGui::SameLine();
+                        std::string mess = "Could not reach desired accuracy in " + std::to_string(imit) + " iterations.";
+                        ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f) , mess.c_str());
+                        ImGui::Text("x:    "); ImGui::SameLine();
+                        ImGui::Text(res.c_str());
+                        ImGui::Text("f(x): "); ImGui::SameLine();
+                        string sfatx = to_string(ffatx);
+                        ImGui::Text(sfatx.c_str());
+                        ImGui::Text("iterations: "); ImGui::SameLine();
+                        string sit = std::to_string(it);
+                        ImGui::Text(sit.c_str());
+                    }
+                    if(stat == 1){
+                        string stringstate;
+                        stringstate = std::to_string(stat);
+                        ImGui::Text("return status: "); ImGui::SameLine();
+                        ImGui::Text(stringstate.c_str()); ImGui::SameLine();
+                        std::string mess = "Error! The maximal number of iterations is lower than 1.";
+                        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f) , mess.c_str());
+                    }
+                    if(stat == 4){
+                        string stringstate;
+                        stringstate = std::to_string(stat);
+                        ImGui::Text("return status: "); ImGui::SameLine();
+                        ImGui::Text(stringstate.c_str()); ImGui::SameLine();
+                        std::string mess = "Error! For some x: [f'(x)]² -2f(x)f\"(x) < 0";
+                        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f) , mess.c_str());
                     }
                 }
                 else if(calc_type == 2){
@@ -278,27 +330,66 @@ int main(int, char**)
                     ImGui::InputTextWithHint("##miti", "max number of iterations", mit, IM_ARRAYSIZE(path)); ImGui::SameLine();
                     ImGui::SetNextItemWidth(ImGui::GetFontSize() * 20);
                     ImGui::InputTextWithHint("##epsi", "desired epsilon", eps, IM_ARRAYSIZE(path));
-                    int stat;
                     string sx(x);
                     string smit(mit);
-                    string seps(mit);
-                    static int clicked = 0;
+                    string seps(eps);
+
+                    int it;
+
                     if (ImGui::Button("Calculate") and !sx.empty() and !smit.empty() and !seps.empty()){
-                        clicked++;
-                    }
-                    if (clicked & 1){
-                        Interval fatx;
-                        int it;
-                        Interval fx(x);
-                        _Float128 feps = strtof128(eps, NULL);
-                        int imit = std::stoi(string(mit));
+                        fx.read_float(sx);
+                        Interval feps(eps);
+                        imit = std::stoi(string(mit));
                         stat = newton_raphson<Interval>(fx, f, df, d2f, imit, feps, fatx, it);
+                    }
+                    if(stat == 0){
                         string res = to_string(fx);
-                        ImGui::Text("resault");
                         string stringstate;
                         stringstate = std::to_string(stat);
-                        ImGui::Text(stringstate.c_str());
+                        ImGui::Text("return status: "); ImGui::SameLine();
+                        ImGui::Text(stringstate.c_str()); ImGui::SameLine();
+                        ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Ok");
+                        ImGui::Text("x:    "); ImGui::SameLine();
                         ImGui::Text(res.c_str());
+                        ImGui::Text("f(x): "); ImGui::SameLine();
+                        string sfatx = to_string(fatx);
+                        ImGui::Text(sfatx.c_str());
+                        ImGui::Text("iterations: "); ImGui::SameLine();
+                        string sit = std::to_string(it);
+                        ImGui::Text(sit.c_str());
+                    }
+                    if(stat == 3){
+                        string res = to_string(fx);
+                        string stringstate;
+                        stringstate = std::to_string(stat);
+                        ImGui::Text("return status: "); ImGui::SameLine();
+                        ImGui::Text(stringstate.c_str()); ImGui::SameLine();
+                        std::string mess = "Could not reach desired accuracy in " + std::to_string(imit) + " iterations.";
+                        ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f) , mess.c_str());
+                        ImGui::Text("x:    "); ImGui::SameLine();
+                        ImGui::Text(res.c_str());
+                        ImGui::Text("f(x): "); ImGui::SameLine();
+                        string sfatx = to_string(fatx);
+                        ImGui::Text(sfatx.c_str());
+                        ImGui::Text("iterations: "); ImGui::SameLine();
+                        string sit = std::to_string(it);
+                        ImGui::Text(sit.c_str());
+                    }
+                    if(stat == 1){
+                        string stringstate;
+                        stringstate = std::to_string(stat);
+                        ImGui::Text("return status: "); ImGui::SameLine();
+                        ImGui::Text(stringstate.c_str()); ImGui::SameLine();
+                        std::string mess = "Error! The maximal number of iterations is lower than 1.";
+                        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f) , mess.c_str());
+                    }
+                    if(stat == 4){
+                        string stringstate;
+                        stringstate = std::to_string(stat);
+                        ImGui::Text("return status: "); ImGui::SameLine();
+                        ImGui::Text(stringstate.c_str()); ImGui::SameLine();
+                        std::string mess = "Error! For some x: [f'(x)]² -2f(x)f\"(x) < 0";
+                        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f) , mess.c_str());
                     }
                 }
                 else if(calc_type == 3){
@@ -306,11 +397,78 @@ int main(int, char**)
                     ImGui::SetNextItemWidth(ImGui::GetFontSize() * 20);
                     ImGui::InputTextWithHint("##xii1", "x upper", xupper, IM_ARRAYSIZE(path)); ImGui::SameLine();
                     ImGui::SetNextItemWidth(ImGui::GetFontSize() * 20);
-                    ImGui::InputTextWithHint("##mitii", "max number of iterations", mit, IM_ARRAYSIZE(path)); ImGui::SameLine();
+                    ImGui::InputTextWithHint("##epsii", "desired epsilon", eps, IM_ARRAYSIZE(path)); ImGui::SameLine();
                     ImGui::SetNextItemWidth(ImGui::GetFontSize() * 20);
-                    ImGui::InputTextWithHint("##epsii", "desired epsilon", eps, IM_ARRAYSIZE(path));
+                    ImGui::InputTextWithHint("##mitii", "max number of iterations", mit, IM_ARRAYSIZE(path)); 
                     ImGui::SetNextItemWidth(ImGui::GetFontSize() * 20);
-                    ImGui::InputTextWithHint("##xii2", "x lower", xlower, IM_ARRAYSIZE(path));
+                    ImGui::InputTextWithHint("##xii22", "x lower", xlower, IM_ARRAYSIZE(path)); 
+                    // ImGui::SameLine();
+                    // ImGui::SetNextItemWidth(ImGui::GetFontSize() * 20);
+                    // ImGui::InputTextWithHint("##xii222", "epsilon lower", epslower, IM_ARRAYSIZE(path));
+                    string sxu(xupper);
+                    string sxl(xlower);
+                    string smit(mit);
+                    string seps(eps);
+                    string sepsl(epslower);
+
+                    int it;
+
+                    if (ImGui::Button("Calculate") and !sxu.empty() and !sxl.empty() and !smit.empty() and !seps.empty()){
+                        fx.read_interval(sxu, sxl);
+                        Interval feps;
+                        feps.read_float(eps);
+                        imit = std::stoi(string(mit));
+                        stat = newton_raphson<Interval>(fx, f, df, d2f, imit, feps, fatx, it);
+                    }
+                    if(stat == 0){
+                        string res = to_string(fx);
+                        string stringstate;
+                        stringstate = std::to_string(stat);
+                        ImGui::Text("return status: "); ImGui::SameLine();
+                        ImGui::Text(stringstate.c_str()); ImGui::SameLine();
+                        ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Ok");
+                        ImGui::Text("x:    "); ImGui::SameLine();
+                        ImGui::Text(res.c_str());
+                        ImGui::Text("f(x): "); ImGui::SameLine();
+                        string sfatx = to_string(fatx);
+                        ImGui::Text(sfatx.c_str());
+                        ImGui::Text("iterations: "); ImGui::SameLine();
+                        string sit = std::to_string(it);
+                        ImGui::Text(sit.c_str());
+                    }
+                    if(stat == 3){
+                        string res = to_string(fx);
+                        string stringstate;
+                        stringstate = std::to_string(stat);
+                        ImGui::Text("return status: "); ImGui::SameLine();
+                        ImGui::Text(stringstate.c_str()); ImGui::SameLine();
+                        std::string mess = "Could not reach desired accuracy in " + std::to_string(imit) + " iterations.";
+                        ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f) , mess.c_str());
+                        ImGui::Text("x:    "); ImGui::SameLine();
+                        ImGui::Text(res.c_str());
+                        ImGui::Text("f(x): "); ImGui::SameLine();
+                        string sfatx = to_string(fatx);
+                        ImGui::Text(sfatx.c_str());
+                        ImGui::Text("iterations: "); ImGui::SameLine();
+                        string sit = std::to_string(it);
+                        ImGui::Text(sit.c_str());
+                    }
+                    if(stat == 1){
+                        string stringstate;
+                        stringstate = std::to_string(stat);
+                        ImGui::Text("return status: "); ImGui::SameLine();
+                        ImGui::Text(stringstate.c_str()); ImGui::SameLine();
+                        std::string mess = "Error! The maximal number of iterations is lower than 1.";
+                        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f) , mess.c_str());
+                    }
+                    if(stat == 4){
+                        string stringstate;
+                        stringstate = std::to_string(stat);
+                        ImGui::Text("return status: "); ImGui::SameLine();
+                        ImGui::Text(stringstate.c_str()); ImGui::SameLine();
+                        std::string mess = "Error! For some x: [f'(x)]² -2f(x)f\"(x) < 0";
+                        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f) , mess.c_str());
+                    }
                 }
             }
             ImGui::End();

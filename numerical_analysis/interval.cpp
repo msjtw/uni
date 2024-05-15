@@ -318,6 +318,18 @@ Interval pow(const Interval &intrvl, int _pow){
     } 
 }
 
+_Float128 pow(const _Float128 x, int _pow){
+    if(_pow == 0)
+        return 1;
+    if(_pow & 1){
+        return pow(x, _pow-1) * x;
+    }
+    else{
+        _Float128 ret = pow(x, _pow >> 1);
+        return ret*ret;
+    } 
+}
+
 _Float128 sqrtf128(const _Float128 intrvl, const bool top){
     _Float128 a = 0;
     _Float128 b = intrvl;

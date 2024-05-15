@@ -103,10 +103,14 @@
     }
 
     _Float128 sqrtf128(const _Float128, bool);
+    _Float128 pow(const _Float128 , int);
     inline _Float128 sqrt(const _Float128 x){
         return sqrtf128(x, false);
     }
     inline _Float128 absf128(const _Float128 f){
+        return (f < 0 ? f * -1 : f);
+    }
+    inline _Float128 abs(const _Float128 f){
         return (f < 0 ? f * -1 : f);
     }
 //}
