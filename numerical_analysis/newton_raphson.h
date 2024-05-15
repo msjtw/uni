@@ -17,7 +17,7 @@
 // it - numer of iterations
 
 // return value st
-// 1: min < 1
+// 1: mit < 1
 // 3: coudn't achive desired accuracy in mit iterations
 // 4: when for some x [f'(x)]² -2f(x)f"(x) < 0
 // in other cases 0

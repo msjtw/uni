@@ -2,7 +2,6 @@
 #ifndef EXT_H
 #define EXT_H
 
-typedef long double ld;
 
 #include "/home/msjtw/Documents/uni/numerical_analysis/interval.h"
 
@@ -12,9 +11,9 @@ extern "C" {
     Interval df(Interval);
     Interval d2f(Interval);
 
-    ld ff(ld);
-    ld dff(ld);
-    ld d2ff(ld);
+    _Float128 ff(_Float128);
+    _Float128 dff(_Float128);
+    _Float128 d2ff(_Float128);
 }
 
 #endif // EXTERNAL_LIBRARY_H

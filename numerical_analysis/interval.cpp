@@ -123,7 +123,7 @@ int Interval::cmp(string a, string b){
     std::reverse(a.begin(), a.end());
     std::reverse(b.begin(), b.end());
     //std::cout << a << std::endl << b << std::endl;
-    for(int i = 0 ; i < a.size(); i++){
+    for(int i = 0 ; i < (int)a.size(); i++){
         if(b[i] > a[i]){
             return 2;
         }
@@ -142,7 +142,7 @@ std::string sci_to_full(std::string sci) {
         sci[sci.find(',')] = '.';
     }
     int p = sci.find('e');
-    if(p == string::npos)
+    if(p == (int)string::npos)
         return sci;
     string num = sci.substr(0, p);
     int pow = std::stoi(sci.substr(p+1));
@@ -247,13 +247,18 @@ std::string to_string(const _Float128 fp, const int n, const char type){
     char buf[11000];
     std::string buf2;
     std::string format = "%." + std::to_string(n) + type;
-    int sz = strfromf128(buf, sizeof buf, format.c_str(), fp);
+    strfromf128(buf, sizeof buf, format.c_str(), fp);
     std::string ret(buf);
     return ret;
 }
 
+std::string to_string(const Interval intrvl, const int n, const char type){
+    std::string ret = + "[ " + to_string(intrvl.left, n, type) + ", " + to_string(intrvl.right) + " ]\n" + to_string(intrvl.right-intrvl.left);
+    return ret;
+}
+
 std::ostream& operator<<(std::ostream& os, const Interval& intrvl){
-    os << "[ " << to_string(intrvl.left) << ", " << to_string(intrvl.right) << " ]" << std::endl << to_string(intrvl.right-intrvl.left);
+    os << to_string(intrvl);
     return os;
 }
 
@@ -343,7 +348,7 @@ Interval sin(Interval intrvl){
 	Interval izero(0, 0);
 	string left, right;
 	_Float128 eps = 1e-30; 
-	_Float128 diff = std::numeric_limits<_Float128>::max();
+	//_Float128 diff = std::numeric_limits<_Float128>::max();
 	if (intrvl.left > intrvl.right)
 		st = 1;
 	else {

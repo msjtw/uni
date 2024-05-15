@@ -278,6 +278,28 @@ int main(int, char**)
                     ImGui::InputTextWithHint("##miti", "max number of iterations", mit, IM_ARRAYSIZE(path)); ImGui::SameLine();
                     ImGui::SetNextItemWidth(ImGui::GetFontSize() * 20);
                     ImGui::InputTextWithHint("##epsi", "desired epsilon", eps, IM_ARRAYSIZE(path));
+                    int stat;
+                    string sx(x);
+                    string smit(mit);
+                    string seps(mit);
+                    static int clicked = 0;
+                    if (ImGui::Button("Calculate") and !sx.empty() and !smit.empty() and !seps.empty()){
+                        clicked++;
+                    }
+                    if (clicked & 1){
+                        Interval fatx;
+                        int it;
+                        Interval fx(x);
+                        _Float128 feps = strtof128(eps, NULL);
+                        int imit = std::stoi(string(mit));
+                        stat = newton_raphson<Interval>(fx, f, df, d2f, imit, feps, fatx, it);
+                        string res = to_string(fx);
+                        ImGui::Text("resault");
+                        string stringstate;
+                        stringstate = std::to_string(stat);
+                        ImGui::Text(stringstate.c_str());
+                        ImGui::Text(res.c_str());
+                    }
                 }
                 else if(calc_type == 3){
                     ImGui::Text("Interval");

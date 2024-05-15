@@ -23,6 +23,7 @@
             friend Interval cos(Interval);
 
             friend std::string to_string(const _Float128, int, char);
+            friend std::string to_string(const Interval, int, char);
             friend std::ostream& operator<<(std::ostream&, const Interval&);
 
 
@@ -92,6 +93,7 @@
     };
 
     std::string to_string(const _Float128, const int n = 50, const char type = 'e');
+    std::string to_string(const Interval, const int n = 50, const char type = 'e');
     std::string sci_to_full(std::string);
 
     inline Interval pi(){
@@ -101,6 +103,9 @@
     }
 
     _Float128 sqrtf128(const _Float128, bool);
+    inline _Float128 sqrt(const _Float128 x){
+        return sqrtf128(x, false);
+    }
     inline _Float128 absf128(const _Float128 f){
         return (f < 0 ? f * -1 : f);
     }

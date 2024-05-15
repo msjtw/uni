@@ -6,8 +6,6 @@
 #include "ext.h"
 #include "cmath"
 
-typedef long double ld;
-
 Interval f(Interval intrvl) {
     Interval ret;
     ret = pow(intrvl, 4);
@@ -30,25 +28,25 @@ Interval d2f(Interval intrvl) {
     return ret;
 }
 
-ld ff(ld x) {
-    ld ret;
-    ret = pow(x, 3);
-    ret = ret + (6 * pow(x, 2));
+_Float128 ff(_Float128 x) {
+    _Float128 ret;
+    ret = x*x*x;
+    ret = ret + (6 * x*x);
     ret = ret + (10 * x);
     ret = ret + -3;
     return ret;
 }
 
-ld dff(ld x) {
-    ld ret;
-    ret = 3 * pow(x, 2);
+_Float128 dff(_Float128 x) {
+    _Float128 ret;
+    ret = 3 * x*x;
     ret = ret + (12 * x);
     ret = ret + 10;
     return ret;
 }
 
-ld d2ff(ld x) {
-    ld ret;
+_Float128 d2ff(_Float128 x) {
+    _Float128 ret;
     ret = 6 * x;
     ret = ret + 12;
     return ret;

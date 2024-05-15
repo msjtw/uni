@@ -68,7 +68,7 @@ int main(){
     // cout << one << endl;
     // cout << f(one) << endl << df(one) << endl << d2f(one);
 
-    Interval res("-2.4"), fatx;
+    Interval res("-2.2"), fatx;
     int it;
     int st = newton_raphson<Interval>(res,f, df, d2f ,10, 1e-16, fatx, it);
 
