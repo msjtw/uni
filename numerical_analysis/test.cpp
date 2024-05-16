@@ -52,7 +52,7 @@ int read_fuct(string path, T (*&f)(T), T (*&df)(T), T (*&d2f)(T)){
 
 int main(){
     std::string libraryPath;
-    libraryPath = "/home/msjtw/Documents/uni/numerical_analysis/ext/libext.so";
+    libraryPath = "/home/msjtw/Documents/uni/numerical_analysis/ext2/libext.so";
     //std::cout << "Enter path to the external library: ";
     //std::cin >> libraryPath;
 
@@ -74,22 +74,30 @@ int main(){
     _Float128 xf = strtof128("-2.2", NULL), ffatx;
     int it;
     int st;
-    st = newton_raphson<_Float128>(xf,ff, dff, d2ff ,10, 1e-16, ffatx, it);
+    // st = newton_raphson<_Float128>(xf,ff, dff, d2ff ,10, 1e-16, ffatx, it);
 
-    //cout << to_string(ff(-2)) << endl;
+    // //cout << to_string(ff(-2)) << endl;
 
-    cout << to_string(xf) << endl;
-    cout << to_string(ffatx) << endl;
-    cout << st << endl;
-    cout << it << endl << endl;
-
-    // Interval res("-2.2"), fatx;
-    // st = newton_raphson<Interval>(res,f, df, d2f ,2, Interval("1e-16"), fatx, it);
-
-    // cout << res << endl;
-    // cout << f(Interval("-2")) << endl;
-    // cout << f(res) << endl;
+    // cout << to_string(xf) << endl;
+    // cout << to_string(ffatx) << endl;
     // cout << st << endl;
-    // cout << it;
+    // cout << it << endl << endl;
+
+    Interval res("-1"), fatx;
+    st = newton_raphson_i(res,f, df, d2f ,5, 1e-16, fatx, it);
+
+    cout << f(Interval("-2.2")) << endl;
+
+    cout << "x:  " << res << endl;
+    cout << "fx:  " << fatx << endl;
+    cout << f(res) << endl;
+    cout << st << endl;
+    cout << it;
+
+    // Interval a("2.2"), b("-1.5");
+
+    // cout << a*b << endl;
+    // cout << pow(res, 4);
+
     return 0;
 }  

@@ -270,7 +270,7 @@ int main(int, char**)
                         ffx = strtof128(x, NULL);
                         _Float128 feps = strtof128(eps, NULL);
                         imit = std::stoi(string(mit));
-                        stat = newton_raphson<_Float128>(ffx, ff, dff, d2ff, imit, feps, ffatx, it);
+                        stat = newton_raphson_f(ffx, ff, dff, d2ff, imit, feps, ffatx, it);
                     }
                     if(stat == 0){
                         string res = to_string(ffx);
@@ -338,9 +338,9 @@ int main(int, char**)
 
                     if (ImGui::Button("Calculate") and !sx.empty() and !smit.empty() and !seps.empty()){
                         fx.read_float(sx);
-                        Interval feps(eps);
+                        _Float128 feps = strtof128(eps, NULL);
                         imit = std::stoi(string(mit));
-                        stat = newton_raphson<Interval>(fx, f, df, d2f, imit, feps, fatx, it);
+                        stat = newton_raphson_i(fx, f, df, d2f, imit, feps, fatx, it);
                     }
                     if(stat == 0){
                         string res = to_string(fx);
@@ -415,10 +415,9 @@ int main(int, char**)
 
                     if (ImGui::Button("Calculate") and !sxu.empty() and !sxl.empty() and !smit.empty() and !seps.empty()){
                         fx.read_interval(sxu, sxl);
-                        Interval feps;
-                        feps.read_float(eps);
+                        _Float128 feps = strtof128(eps, NULL);
                         imit = std::stoi(string(mit));
-                        stat = newton_raphson<Interval>(fx, f, df, d2f, imit, feps, fatx, it);
+                        stat = newton_raphson_i(fx, f, df, d2f, imit, feps, fatx, it);
                     }
                     if(stat == 0){
                         string res = to_string(fx);

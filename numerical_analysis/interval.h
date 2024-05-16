@@ -15,12 +15,15 @@
             Interval(_Float128, _Float128);
             bool read_float(std::string);
             bool read_interval(std::string, std::string);
+            _Float128 width();
 
             friend Interval sqrt(const Interval &);
             friend Interval pow(const Interval &, int);
             friend Interval abs(const Interval &);
             friend Interval sin(Interval);
             friend Interval cos(Interval);
+            friend bool neg(const Interval &);
+            friend Interval make_intr(const Interval &, const Interval &);
 
             friend std::string to_string(const _Float128, int, char);
             friend std::string to_string(const Interval, int, char);
@@ -31,15 +34,8 @@
             Interval operator-(const Interval &) const;
             Interval operator*(const Interval &) const;
             Interval operator/(const Interval &) const;
-            bool operator<(const Interval &) const;
-            inline bool operator>(const Interval &intrvl) const{
-                return !this->operator<(intrvl);
-            }
+
             bool operator==(const Interval &) const;
-            bool operator<=(const Interval &) const;
-            inline bool operator>=(const Interval &intrvl) const{
-                return !this->operator<=(intrvl);
-            }
 
             bool operator<(const _Float128 &) const;
             inline bool operator>(const _Float128 &val) const{

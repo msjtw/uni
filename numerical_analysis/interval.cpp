@@ -168,6 +168,10 @@ std::string sci_to_full(std::string sci) {
     return num;
 }
 
+_Float128 Interval::width(){
+    return right-left;
+}
+
 Interval Interval::operator +(const Interval & intrvl) const{
     Interval ret;
     std::fesetround(FE_DOWNWARD);
@@ -181,9 +185,9 @@ Interval Interval::operator +(const Interval & intrvl) const{
 Interval Interval::operator -(const Interval & intrvl) const{
     Interval ret;
     std::fesetround(FE_DOWNWARD);
-    ret.left = left - intrvl.left;
+    ret.left = left - intrvl.right;
     std::fesetround(FE_UPWARD);
-    ret.right = right - intrvl.right;
+    ret.right = right - intrvl.left;
     std::fesetround(FE_TONEAREST);
     return ret;
 }
@@ -209,7 +213,7 @@ Interval Interval::operator *(const Interval & intrvl) const{
 
 Interval Interval::operator /(const Interval & intrvl) const{
     if(intrvl.left <= 0 and intrvl.right >= 0)
-        throw std::runtime_error("Division by an interval containing 0.");
+        throw std::runtime_error("Division by an interval containing 0." + to_string(intrvl));
     _Float128 _left, _right;
     std::fesetround(FE_DOWNWARD);
     _left = 1/intrvl.right;
@@ -227,16 +231,6 @@ bool Interval::operator ==(const Interval & intrvl) const{
         return false;
     }
     return true;
-}
-
-bool Interval::operator <(const Interval & intrvl) const{
-    _Float128 mid1 = (left+right)/2;
-    _Float128 mid2 = (intrvl.left+intrvl.right)/2;
-    return mid1 < mid2;
-}
-
-bool Interval::operator <=(const Interval & intrvl) const{
-    return *this < intrvl or *this == intrvl;
 }
 
 bool Interval::operator <(const _Float128 & val) const{
@@ -273,10 +267,10 @@ Interval abs(const Interval &intrvl){
         a *= (a < 0 ? -1 : 1);
         b *= (b < 0 ? -1 : 1);
         if(a < b){
-            ret.left = a;
+            ret.right = a;
         }
         else{
-            ret.left = b;
+            ret.right = b;
         }
     }
     _Float128 a = intrvl.right;
@@ -284,12 +278,31 @@ Interval abs(const Interval &intrvl){
     a *= (a < 0 ? -1 : 1);
     b *= (b < 0 ? -1 : 1);
     if(a > b){
-        ret.right = a;
+        ret.left = a;
     }
     else{
-        ret.right = b;
+        ret.left = b;
     }
     return ret;
+}
+
+bool neg(const Interval &intrvl){
+    return (intrvl.left <= 0 or intrvl.right <= 0);
+}
+
+Interval make_intr(const Interval &a, const Interval &b){
+    Interval res;
+    if(a.right > b.right)
+        res.right = a.right;
+    else
+        res.right = b.right;
+
+    if(a.left < b.left)
+        res.left = a.left;
+    else
+        res.left = b.left;
+
+    return res;
 }
 
 Interval sqrt(const Interval &intrvl){
@@ -309,11 +322,7 @@ Interval pow(const Interval &intrvl, int _pow){
     }
     else{
         Interval ret = abs(pow(intrvl, _pow >> 1));
-        std::fesetround(FE_DOWNWARD);
-        ret.left *= ret.left;
-        std::fesetround(FE_UPWARD);
-        ret.right *= ret.right;
-        std::fesetround(FE_TONEAREST);
+        ret = ret*ret;
         return ret;
     } 
 }
