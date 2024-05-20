@@ -23,6 +23,7 @@
             friend Interval sin(Interval);
             friend Interval cos(Interval);
             friend bool neg(const Interval &);
+            friend bool con_zero(const Interval &);
             friend Interval make_intr(const Interval &, const Interval &);
 
             friend std::string to_string(const _Float128, int, char);
@@ -36,11 +37,6 @@
             Interval operator/(const Interval &) const;
 
             bool operator==(const Interval &) const;
-
-            bool operator<(const _Float128 &) const;
-            inline bool operator>(const _Float128 &val) const{
-                return !this->operator<(val);
-            }
 
             inline Interval operator+(int a) const{
                 return this->operator+(Interval(std::to_string(a)));
@@ -70,12 +66,6 @@
             }
             friend Interval operator/(int a, const Interval &intrvl){
                 return intrvl / a;
-            }
-            friend bool operator<(_Float128 a, const Interval &intrvl){
-                return intrvl < a;
-            }
-            friend bool operator>(int a, const Interval &intrvl){
-                return !(intrvl < a);
             }
             friend bool operator==(int a, const Interval &intrvl){
                 return intrvl == a;

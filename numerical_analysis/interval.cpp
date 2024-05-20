@@ -233,10 +233,6 @@ bool Interval::operator ==(const Interval & intrvl) const{
     return true;
 }
 
-bool Interval::operator <(const _Float128 & val) const{
-    return right-left < val;
-}
-
 std::string to_string(const _Float128 fp, const int n, const char type){
     char buf[11000];
     std::string buf2;
@@ -288,6 +284,10 @@ Interval abs(const Interval &intrvl){
 
 bool neg(const Interval &intrvl){
     return (intrvl.left <= 0 or intrvl.right <= 0);
+}
+
+bool con_zero(const Interval &intrvl){
+    return (intrvl.left <= 0 and  intrvl.right >= 0);
 }
 
 Interval make_intr(const Interval &a, const Interval &b){

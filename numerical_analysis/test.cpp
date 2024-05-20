@@ -84,15 +84,15 @@ int main(){
     // cout << it << endl << endl;
 
     Interval res("-1"), fatx;
+    //_Float128 res = -1, fatx;
     st = newton_raphson_i(res,f, df, d2f ,5, 1e-16, fatx, it);
 
-    cout << f(Interval("-2.2")) << endl;
+    //cout << f(Interval("-2.2")) << endl;
 
-    cout << "x:  " << res << endl;
-    cout << "fx:  " << fatx << endl;
-    cout << f(res) << endl;
+    cout << it << endl;
+    cout << "x:  " << to_string(res) << endl;
+    cout << "fx:  " << to_string(fatx) << endl;
     cout << st << endl;
-    cout << it;
 
     // Interval a("2.2"), b("-1.5");
 

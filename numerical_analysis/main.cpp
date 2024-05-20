@@ -313,6 +313,14 @@ int main(int, char**)
                         std::string mess = "Error! The maximal number of iterations is lower than 1.";
                         ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f) , mess.c_str());
                     }
+                    if(stat == 2){
+                        string stringstate;
+                        stringstate = std::to_string(stat);
+                        ImGui::Text("return status: "); ImGui::SameLine();
+                        ImGui::Text(stringstate.c_str()); ImGui::SameLine();
+                        std::string mess = "Error! For some x: f\"(x) = 0.";
+                        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f) , mess.c_str());
+                    }
                     if(stat == 4){
                         string stringstate;
                         stringstate = std::to_string(stat);
@@ -381,6 +389,14 @@ int main(int, char**)
                         ImGui::Text("return status: "); ImGui::SameLine();
                         ImGui::Text(stringstate.c_str()); ImGui::SameLine();
                         std::string mess = "Error! The maximal number of iterations is lower than 1.";
+                        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f) , mess.c_str());
+                    }
+                    if(stat == 2){
+                        string stringstate;
+                        stringstate = std::to_string(stat);
+                        ImGui::Text("return status: "); ImGui::SameLine();
+                        ImGui::Text(stringstate.c_str()); ImGui::SameLine();
+                        std::string mess = "Error! For some x: f\"(x) = 0.";
                         ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f) , mess.c_str());
                     }
                     if(stat == 4){
@@ -458,6 +474,14 @@ int main(int, char**)
                         ImGui::Text("return status: "); ImGui::SameLine();
                         ImGui::Text(stringstate.c_str()); ImGui::SameLine();
                         std::string mess = "Error! The maximal number of iterations is lower than 1.";
+                        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f) , mess.c_str());
+                    }
+                    if(stat == 2){
+                        string stringstate;
+                        stringstate = std::to_string(stat);
+                        ImGui::Text("return status: "); ImGui::SameLine();
+                        ImGui::Text(stringstate.c_str()); ImGui::SameLine();
+                        std::string mess = "Error! For some x: f\"(x) = 0.";
                         ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f) , mess.c_str());
                     }
                     if(stat == 4){
