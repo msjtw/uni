@@ -8,3 +8,4 @@ numerical_analysis/ext/libext.so
 numerical_analysis/interval_2.h
 numerical_analysis/doc/doc.aux
 numerical_analysis/doc/doc.log
+numerical_analysis/doc/doc.toc
