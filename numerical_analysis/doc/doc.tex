@@ -13,8 +13,7 @@
 
 \title{%
     Rozwiązywanie rówania nieliniowego \\
-    metodą Newtona Raphsona \\
-    \large Dokumentacja}
+    metodą Newtona Raphsona.}
 \author{ Stanisław Fiedler }
 \date{\today}
 
@@ -115,9 +114,65 @@
 \pagebreak
 \section{Przykłady}
     \begin{enumerate}
-        \item Równanie $$f(x) = x^3 - 3x -1$$ $$x=$$
         \item Równanie
+        $$f(x) = x^3 - 3x -1$$
+        Dane:\\
+        \begin{tabular}{r l}
+            \hline
+            x:&-0.5\\
+            mit:&10\\
+            eps:&1e-16\\
+            \hline
+        \end{tabular}\\\\
+        Wyniki:\\
+        \begin{tabular}{r l}
+            \hline
+            x:&-3.47296355333860697703433253538629587230160763599116e-01\\
+            fx:&0.0e+00\\
+            it:&4\\
+            st:&0\\
+            \hline
+        \end{tabular}
         \item Równanie
+        $$f(x) = x^3 - 3x -1$$
+        Dane:\\
+        \begin{tabular}{r l}
+            \hline
+            x:&[-0.5, -0.5]\\
+            mit:&10\\
+            eps:&1e-16\\
+            \hline
+        \end{tabular}\\\\
+        Wyniki:\\
+        \begin{tabular}{r l}
+            \hline
+            x:&[ -3.47296355333860697703433253782741063236497078931272e-01, \\
+              &-3.47296355333860697703433253538612783491395984966298e-01 ]\\
+            szerokość:&2.44128279745101093964974138431842897246009738490558e-28\\
+            fx:&[ -8.83808288514330339349461749863251854013475577315218e-29, \\
+              &7.32340639143079594832094780601746367656068766038846e-28 ]\\
+            szerokość:&8.20721467994512628767040955588071553057416323770368e-28\\
+            it:&4\\
+            st:&0\\
+            \hline
+        \end{tabular}
+        \item Równanie
+        $$f(x) = x^3 - 3x -1$$
+        Dane:\\
+        \begin{tabular}{r l}
+            \hline
+            x:&[-10, -10]\\
+            mit:&10\\
+            eps:&1e-16\\
+            \hline
+        \end{tabular}\\\\
+        Wyniki:\\
+        \begin{tabular}{r l}
+            \hline
+            st:&4\\
+            \hline
+        \end{tabular}\\
+        dla pewnego x: $[f'(x)]^2 -2f(x)f''(x) < 0$
     \end{enumerate}
 \pagebreak
 \tableofcontents

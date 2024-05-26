@@ -71,10 +71,11 @@ int main(){
     // cout << one << endl;
     // cout << f(one) << endl << df(one) << endl << d2f(one);
 
-    _Float128 xf = strtof128("-2.2", NULL), ffatx;
+    _Float128 xf = strtof128("-0.5", NULL), ffatx;
+    //_Float128 fatx;
     int it;
     int st;
-    // st = newton_raphson<_Float128>(xf,ff, dff, d2ff ,10, 1e-16, ffatx, it);
+    st = newton_raphson_f(xf,ff, dff, d2ff ,10, 1e-16, ffatx, it);
 
     // //cout << to_string(ff(-2)) << endl;
 
@@ -83,17 +84,16 @@ int main(){
     // cout << st << endl;
     // cout << it << endl << endl;
 
-    Interval res("-1"), fatx;
+    Interval res("-0.5"), fatx;
     //_Float128 res = -1, fatx;
     st = newton_raphson_i(res,f, df, d2f ,5, 1e-16, fatx, it);
 
     //cout << f(Interval("-2.2")) << endl;
 
-    cout << it << endl;
     cout << "x:  " << to_string(res) << endl;
-    cout << "fx:  " << to_string(fatx) << endl;
+    cout << "fx: " << to_string(fatx) << endl;
+    cout << "it: " << it << endl;
     cout << st << endl;
-
     // Interval a("2.2"), b("-1.5");
 
     // cout << a*b << endl;
