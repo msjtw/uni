@@ -361,159 +361,17 @@ _Float128 sqrtf128(const _Float128 intrvl, const bool top){
 };
 
 Interval sin(Interval intrvl){
-    bool is_even, finished;
-	int k;
-	int st = 0;
-    int num = 1e6;
-	Interval d, s, w, w1, x2, x, tmp;
-	Interval izero(0, 0);
-	string left, right;
-	_Float128 eps = 1e-30; 
-	//_Float128 diff = std::numeric_limits<_Float128>::max();
-	if (intrvl.left > intrvl.right)
-		st = 1;
-	else {
-		s = intrvl;
-		w = intrvl;
-        x = intrvl;
-		x2 = x * x;
-		k = 1;
-		is_even = true;
-		finished = false;
-		st = 0;
+    Interval ret;
+    ret.left = sinf128(intrvl.left);
+    ret.right = sinf128(intrvl.right);
 
-		do {
-			d.left = (k + 1) * (k + 2);
-			d.right = d.left;
-			s = (s*(x2/d));
-			if (is_even)
-				w1 = (w-s);
-			else
-				w1 = (w+s);
-
-			if ((w.left == 0) && (w.right == 0)) {
-				return izero;
-			}
-
-            //std::cout << "a" << std::endl;
-
-			if ((w.left != 0) && (w.right != 0)) {
-                // std::cout << "c1" << std::endl;
-                // std::cout << w << std::endl;
-                // std::cout << w1 << std::endl;
-				if ((absf128(w.left - w1.left) / absf128(w.left) < eps)
-						&& (absf128(w.right - w1.right) / absf128(w.right) < eps))
-					finished = true;
-				else
-					;
-			} else if ((w.left == 0) && (w.right != 0)) {
-                std::cout << "c2" << std::endl;
-				if ((absf128(w.left - w1.left) < eps)
-						&& (absf128(w.right - w1.right) / absf128(w.right) < eps))
-					finished = true;
-				else
-					;
-			} else if (w.left != 0) {
-                std::cout << "c3" << std::endl;
-				if ((absf128(w.left - w1.left) / absf128(w.left) < eps)
-						& (absf128(w.right - w1.right) < eps))
-					finished = true;
-				else if ((absf128(w.left - w1.left) < eps) & (absf128(w.right - w1.right) < eps))
-					finished = true;
-			}
-
-			if (finished) {
-				if (w1.right > 1) {
-					w1.right = 1;
-					if (w1.left > 1)
-						w1.left = 1;
-				}
-				if (w1.left < -1) {
-					w1.left = -1;
-					if (w1.right < -1)
-						w1.right = -1;
-				}
-				return w1;
-			} else {
-				w = w1;
-				k = k + 2;
-				is_even = !is_even;
-			}
-		} while (!(finished || (k > INT_MAX / 2)) and num --> 0);
-	}
-	if (!finished)
-		st = 2;
-
-	// Interval r;
-	return w;
+    return ret;
 }
 
 Interval cos(Interval intrvl){
-    Interval c, d, w, w1, x2;
-	int k, st;
-	bool is_even, finished;
+    Interval ret;
+    ret.left = cosf128(intrvl.left);
+    ret.right = cosf128(intrvl.right);
 
-	c.left = 1;
-	c.right = 1;
-	w = c;
-	x2 = intrvl * intrvl;
-	k = 1;
-	is_even = true;
-	finished = false;
-	st = 0;
-
-	do {
-		d.left = k * (k + 1);
-		d.right = d.left;
-		c = (c *(x2/ d));
-		if (is_even) {
-			w1 = (w - c);
-		} else {
-			w1 = (w - c);
-		}
-		if ((w.left != 0) && (w.right != 0)) {
-			if (((abs(w.left - w1.left) / abs(w.left)) < 1e-18)
-					&& (abs(w.right - w1.right) / abs(w.right) < 1e-18))
-				finished = true;
-		} else {
-			if ((w.left == 0) && (w.right != 0)) {
-				if ((abs(w.left - w1.left) < 1e-18)
-						&& (abs(w.right - w1.right) / abs(w.right) < 1e-18)) {
-					finished = true;
-				}
-			} else if (w.left != 0) {
-				if ((abs(w.left - w1.left) / abs(w.left) < 1e-18)
-						&& (abs(w.right - w1.right) < 1e-18))
-					finished = true;
-			} else if ((abs(w.left - w1.left) < 1e-18) && (abs(w.right - w1.right) < 1e-18))
-				finished = true;
-
-		}
-		if (finished) {
-			if (w1.right > 1) {
-				w1.right = 1;
-				if (w1.left > 1)
-					w1.left = 1;
-			}
-			if (w1.left < -1) {
-				w1.left = -1;
-				if (w1.right < -1)
-					w1.right = -1;
-			}
-			return w1;
-		} else {
-			w = w1;
-			k = k + 2;
-			is_even = !is_even;
-		}
-
-	} while (!finished || (k > INT_MAX / 2));
-
-	if (!finished)
-		st = 2;
-
-	Interval r;
-	r.left = 0;
-	r.right = 0;
-	return r;
+    return ret;
 }
