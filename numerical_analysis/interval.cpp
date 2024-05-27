@@ -122,7 +122,6 @@ int Interval::cmp(string a, string b){
     }
     std::reverse(a.begin(), a.end());
     std::reverse(b.begin(), b.end());
-    //std::cout << a << std::endl << b << std::endl;
     for(int i = 0 ; i < (int)a.size(); i++){
         if(b[i] > a[i]){
             return 2;
@@ -362,16 +361,16 @@ _Float128 sqrtf128(const _Float128 intrvl, const bool top){
 
 Interval sin(Interval intrvl){
     Interval ret;
-    ret.left = sinf128(intrvl.left);
-    ret.right = sinf128(intrvl.right);
+    ret.left = nextafterf128(sinf128(intrvl.left), -INFINITY);
+    ret.right = nextafterf128(sinf128(intrvl.right), INFINITY);
 
     return ret;
 }
 
 Interval cos(Interval intrvl){
     Interval ret;
-    ret.left = cosf128(intrvl.left);
-    ret.right = cosf128(intrvl.right);
+    ret.left = nextafterf128(cosf128(intrvl.left), -INFINITY);
+    ret.right = nextafterf128(cosf128(intrvl.right), INFINITY);
 
     return ret;
 }

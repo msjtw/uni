@@ -98,7 +98,12 @@ int newton_raphson_i(Interval &x, Interval (*f)(Interval), Interval (*df)(Interv
             xh = x;
             w = abs(xh);
             p = sqrt(p);
-            x = x-(dfatx+p)/d2fatx;
+            x1 = x-(dfatx-p)/d2fatx;
+            x2 = x-(dfatx+p)/d2fatx;
+            if( make_intr(x2, xh).width() > make_intr(x1, xh).width() )
+                x = x1;
+            else 
+                x = x2;
             ret = make_intr(x, xh);
             if( ret.width() < eps ){
                 st = 0;

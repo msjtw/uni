@@ -24,11 +24,11 @@
     Funkcja \verb|newton_raphson_i| znajduje przedział zawierający miejsce zerowe równania z zadaną dokładnością.
 \section{Opis metody}
     Kolejne przybliżenia wartości miejsca zerowego fukcji za pomocą metody Newtona Raphsona wyznaczane są wzorem:
-    $$x_{i+1} = x_i - \frac{f'(x_i)+\sqrt[]{[f'(x_i)]^2-2f(x_i)f''(x_i)}}{f''(x_i)}, i = 0, 1, ...$$
+    $$x_{i+1} = x_i - \frac{f'(x_i)+\sqrt[]{[f'(x_i)]^2-2f(x_i)f''(x_i)}}{f''(x_i)}, i = 0, 1, 2, ...$$
     gdzie $x_0$ jest dana. 
-    Proces kończy się kiedy szerokość przedziału zawierającego dwa ostatnie przybilżenia jest miejszy od zadanego na początku $\varepsilon$.
+    Proces kończy się kiedy szerokość przedziału zawierającego dwa ostatnie przybilżenia jest miejsza od zadanego na początku $\varepsilon$.
 \section{Wywołanie funkcji}
-    \verb|newton_raphson_i(res, f, df, d2f ,mit, eps, fatx, it);|
+    \verb|newton_raphson_i(x, f, df, d2f ,mit, eps, fatx, it);|
 \section{Dane}
     \begin{description}
         \item[x] - początkowe przybliżenie miejsca zerowego.
@@ -74,7 +74,7 @@
                     const int mit, const _Float128 eps, Interval &fatx, int &it){
             int st;
             Interval dfatx, d2fatx, p, v, w, xh, x1, x2, ret;
-
+        
             if(mit < 1){
                 return 1;
             }
@@ -96,7 +96,12 @@
                     xh = x;
                     w = abs(xh);
                     p = sqrt(p);
-                    x = x-(dfatx+p)/d2fatx;
+                    x1 = x-(dfatx-p)/d2fatx;
+                    x2 = x-(dfatx+p)/d2fatx;
+                    if( make_intr(x2, xh).width() > make_intr(x1, xh).width() )
+                        x = x1;
+                    else 
+                        x = x2;
                     ret = make_intr(x, xh);
                     if( ret.width() < eps ){
                         st = 0;
@@ -117,18 +122,18 @@
         \item Równanie
         $$f(x) = x^3 - 3x -1$$
         Dane:\\
-        \begin{tabular}{r l}
-            \hline
+        \begin{tabular}{r|l}
+            
             x:&-0.5\\
             mit:&10\\
             eps:&1e-16\\
             \hline
         \end{tabular}\\\\
         Wyniki:\\
-        \begin{tabular}{r l}
-            \hline
+        \begin{tabular}{r|l}
+            
             x:&-3.47296355333860697703433253538629587230160763599116e-01\\
-            fx:&0.0e+00\\
+            fx:&0.000e+00\\
             it:&4\\
             st:&0\\
             \hline
@@ -136,16 +141,16 @@
         \item Równanie
         $$f(x) = x^3 - 3x -1$$
         Dane:\\
-        \begin{tabular}{r l}
-            \hline
+        \begin{tabular}{r|l}
+            
             x:&[-0.5, -0.5]\\
             mit:&10\\
             eps:&1e-16\\
             \hline
         \end{tabular}\\\\
         Wyniki:\\
-        \begin{tabular}{r l}
-            \hline
+        \begin{tabular}{r|l}
+            
             x:&[ -3.47296355333860697703433253782741063236497078931272e-01, \\
               &-3.47296355333860697703433253538612783491395984966298e-01 ]\\
             szerokość:&2.44128279745101093964974138431842897246009738490558e-28\\
@@ -159,16 +164,15 @@
         \item Równanie
         $$f(x) = x^3 - 3x -1$$
         Dane:\\
-        \begin{tabular}{r l}
-            \hline
+        \begin{tabular}{r|l}
+            
             x:&[-10, -10]\\
             mit:&10\\
             eps:&1e-16\\
             \hline
         \end{tabular}\\\\
         Wyniki:\\
-        \begin{tabular}{r l}
-            \hline
+        \begin{tabular}{r|l}
             st:&4\\
             \hline
         \end{tabular}\\

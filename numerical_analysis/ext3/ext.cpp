@@ -8,23 +8,24 @@
 
 Interval f(Interval x) {
     Interval ret;
-    ret = pow(sin(x), 4); 
-    ret = ret + 0.5L*sin(x);
-    ret = ret - 0.5;
+    Interval y = sin(x);
+    ret = pow(sin(x), 2); 
+    ret = ret + ( Interval("0.5") *sin(x));
+    ret = ret - Interval("0.5");
     return ret;
 }
 
 Interval df(Interval x) {
     Interval ret;
-    ret = sin(2*x);
-    ret = ret + 0.5L*cos(x);
+    ret = sin(Interval("2")*x);
+    ret = ret + (Interval("0.5")*cos(x));
     return ret;
 }
 
 Interval d2f(Interval x) {
     Interval ret;
-    ret = 2 * cos(2*x);
-    ret = ret - 0.5L*sin(x);
+    ret = Interval("2") * cos(Interval("2")*x);
+    ret = ret - (Interval("0.5")*sin(x));
     return ret;
 }
 
