@@ -254,6 +254,11 @@ int main(int, char**)
 
                 if(calc_type == 1){
                     ImGui::Text("Float");
+                    ImGui::Text("x");
+                    ImGui::SameLine(ImGui::GetFontSize() * 22);
+                    ImGui::Text("max number of iterations");
+                    ImGui::SameLine(ImGui::GetFontSize() * 42);
+                    ImGui::Text("epsilon");
                     ImGui::SetNextItemWidth(ImGui::GetFontSize() * 20);
                     ImGui::InputTextWithHint("##x", "x", x, IM_ARRAYSIZE(x)); ImGui::SameLine();
                     ImGui::SetNextItemWidth(ImGui::GetFontSize() * 20);
@@ -332,6 +337,11 @@ int main(int, char**)
                 }
                 else if(calc_type == 2){
                     ImGui::Text("Point Interval");
+                    ImGui::Text("x");
+                    ImGui::SameLine(ImGui::GetFontSize() * 22);
+                    ImGui::Text("max number of iterations");
+                    ImGui::SameLine(ImGui::GetFontSize() * 42);
+                    ImGui::Text("epsilon");
                     ImGui::SetNextItemWidth(ImGui::GetFontSize() * 20);
                     ImGui::InputTextWithHint("##xi", "x", x, IM_ARRAYSIZE(path)); ImGui::SameLine();
                     ImGui::SetNextItemWidth(ImGui::GetFontSize() * 20);
@@ -410,12 +420,17 @@ int main(int, char**)
                 }
                 else if(calc_type == 3){
                     ImGui::Text("Interval");
+                    ImGui::Text("x");
+                    ImGui::SameLine(ImGui::GetFontSize() * 22);
+                    ImGui::Text("max number of iterations");
+                    ImGui::SameLine(ImGui::GetFontSize() * 42);
+                    ImGui::Text("epsilon");
                     ImGui::SetNextItemWidth(ImGui::GetFontSize() * 20);
                     ImGui::InputTextWithHint("##xii1", "x upper", xupper, IM_ARRAYSIZE(path)); ImGui::SameLine();
                     ImGui::SetNextItemWidth(ImGui::GetFontSize() * 20);
-                    ImGui::InputTextWithHint("##epsii", "desired epsilon", eps, IM_ARRAYSIZE(path)); ImGui::SameLine();
+                    ImGui::InputTextWithHint("##mitii", "max number of iterations", mit, IM_ARRAYSIZE(path));  ImGui::SameLine();
                     ImGui::SetNextItemWidth(ImGui::GetFontSize() * 20);
-                    ImGui::InputTextWithHint("##mitii", "max number of iterations", mit, IM_ARRAYSIZE(path)); 
+                    ImGui::InputTextWithHint("##epsii", "desired epsilon", eps, IM_ARRAYSIZE(path));
                     ImGui::SetNextItemWidth(ImGui::GetFontSize() * 20);
                     ImGui::InputTextWithHint("##xii22", "x lower", xlower, IM_ARRAYSIZE(path)); 
                     // ImGui::SameLine();
