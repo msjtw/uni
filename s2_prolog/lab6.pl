@@ -3,7 +3,6 @@
 %%% Przykładowo:  student(jan,nowak_jeziorański,150000,2).                    %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-student(stanislaw, fiedler, 160250, 1).
 
 %zadanie 1
 najwiekszy([X], X).
