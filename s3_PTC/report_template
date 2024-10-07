@@ -1,0 +1,27 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\title{%
+       \large Sprawozdanie Laboratorium PTC \\
+       \huge Proste Układy Kombinacyjne}
+
+\author{Stanisław Fiedler 160250}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Zadanie }
+
+
+\end{document}

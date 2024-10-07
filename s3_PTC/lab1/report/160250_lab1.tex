@@ -1,0 +1,165 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{amssymb}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\usepackage{tikz}
+\usetikzlibrary{fit,arrows,matrix,positioning, calc}
+
+
+\title{%
+       \large Sprawozdanie Laboratorium PTC \\
+       \huge Proste Układy Kombinacyjne}
+
+\author{Stanisław Fiedler 160250}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Zadanie 3}
+Koder priorytetowy jest nieco podobny do układu z zadania 2.
+Układ ma 3 wejścia X0, X1, X2 i 3 wyjścia Y0, Y1, GS (Got Something).
+Jezeli jedno lub więcej wejść jest aktywne (stan „1”), to GS=”1” a na wyjściach Y1, Y0 pojawia się zakodowany (naturalny kod binarny) numer aktywnego wejścia znajwyższą wagą. Kodowanie: 00, 01, 10.
+Wagi wejść i wyjść: X2 najwyższa X0 najniższa. Y1 najwyższa,
+Y0 najniższa.
+
+\begin{enumerate}
+	\item Sporządź tablice wartości funkcji Y1, Y0 i GS;
+	\item Korzystając z siatki Karnaugha zminimalizuj funkcje Y1, Y0, GS;
+	\item Narysuj schemat układu wykorzystując bramki AND, OR, NOT;
+	\item Zasymuluj działanie układu wykorzystując Logisim;
+	\item Przekształć układ, tak aby można go było zrealizować korzystając wyłącznie z 2-wejściowych
+	      bramek NAND;
+	\item Zasymuluj działanie układu z punktu 5 wykorzystując Logisim.
+\end{enumerate}
+
+\subsection{Tablica wartości funkcji Y1, Y0 i GS}\label{sub:tablicawartosci} % (fold)
+
+\begin{center}
+	\[
+		\begin{array}{ | c | c | c || c | c | c | }
+			\hline
+			X_2 & X_1 & X_0 & Y_1 & Y_0 & GS \\
+			\hline\hline
+			0   & 0   & 0   & 0   & 0   & 0  \\
+			0   & 0   & 1   & 0   & 1   & 1  \\
+			0   & 1   & 0   & 1   & 0   & 1  \\
+			0   & 1   & 1   & 1   & 0   & 1  \\
+			1   & 0   & 0   & 1   & 1   & 1  \\
+			1   & 0   & 1   & 1   & 1   & 1  \\
+			1   & 1   & 0   & 1   & 1   & 1  \\
+			1   & 1   & 1   & 1   & 1   & 1  \\
+			\hline
+		\end{array}
+	\]
+\end{center}
+
+% subsection  (end)
+
+\subsection{Siatka Karnaugha}\label{sub:siatka_} % (fold)
+\begin{center}
+	\[ Y_1 \]
+
+	\begin{tikzpicture}
+		\matrix (Y1) [matrix of math nodes, nodes in empty cells, nodes={minimum height=1cm, minimum width=1cm, anchor=center}, column 1/.style={nodes={minimum height=1cm, minimum width=2cm, anchor=center}}] (m)
+		{
+				{} & 00 & 01 & 11 & 10 \\
+				0             & 0  & 0  & 1  & 1  \\
+				1             & 1  & 1  & 1  & 1  \\
+			};
+		\draw[double distance=2pt] (m-1-2.north west) -- (m-3-2.south west);
+		\draw[double distance=2pt] (m-1-1.south west) -- (m-1-5.south east);
+		\node[fit={(m-2-4.north west) (m-3-5.south east)},
+			thick, inner sep=0pt, rounded corners=1mm,
+			draw=green ]{};
+		\node[fit={(m-3-2.north west) (m-3-5.south east)},
+			thick, inner sep=0pt, rounded corners=1mm,
+			draw=blue ]{};
+		\draw (m-1-1.north west) -- (m-1-1.south east);
+		\node[anchor=south west, font=\small] at ($(m-1-1.center) + (-0.2,-0.1)$) {$X_1X_2$};
+		\node[anchor=north east, font=\small] at ($(m-1-1.center) + (-0.2,0.2)$) {$X_0$};
+	\end{tikzpicture}
+
+\end{center}
+
+\begin{center}
+	\[ Y_0 \]
+
+	\begin{tikzpicture}
+		\matrix (Y1) [matrix of math nodes, nodes in empty cells, nodes={minimum height=1cm, minimum width=1cm, anchor=center}, column 1/.style={nodes={minimum height=1cm, minimum width=2cm, anchor=center}}] (m)
+		{
+				{} & 00 & 01 & 11 & 10 \\
+				0         & 0  & 1  & 0  & 0  \\
+				1         & 1  & 1  & 1  & 1  \\
+			};
+		\draw[double distance=2pt] (m-1-2.north west) -- (m-3-2.south west);
+		\draw[double distance=2pt] (m-1-1.south west) -- (m-1-5.south east);;
+		\node[fit={(m-2-3.north west) (m-3-3.south east)},
+			thick, inner sep=0pt, rounded corners=1mm,
+			draw=green ]{};
+		\node[fit={(m-3-2.north west) (m-3-5.south east)},
+			thick, inner sep=0pt, rounded corners=1mm,
+			draw=blue ]{};
+		\draw (m-1-1.north west) -- (m-1-1.south east);
+		\node[anchor=south west, font=\small] at ($(m-1-1.center) + (-0.2,-0.1)$) {$X_1X_2$};
+		\node[anchor=north east, font=\small] at ($(m-1-1.center) + (-0.2,0.2)$) {$X_0$};
+	\end{tikzpicture}
+
+\end{center}
+
+\begin{center}
+	\[ GS \]
+	\begin{tikzpicture}
+		\matrix (Y1) [matrix of math nodes, nodes in empty cells, nodes={minimum height=1cm, minimum width=1cm, anchor=center}, column 1/.style={nodes={minimum height=1cm, minimum width=2cm, anchor=center}}] (m)
+		{
+				{} & 00 & 01 & 11 & 10 \\
+				0             & 0  & 1  & 1  & 1  \\
+				1             & 1  & 1  & 1  & 1  \\
+			};
+		\draw[double distance=2pt] (m-1-2.north west) -- (m-3-2.south west);
+		\draw[double distance=2pt] (m-1-1.south west) -- (m-1-5.south east);;
+		\node[fit={(m-2-4.north west) (m-3-5.south east)},
+			thick, inner sep=0pt, rounded corners=1mm,
+			draw=green ]{};
+		\node[fit={(m-2-3.north west) (m-3-4.south east)},
+			thick, inner sep=0pt, rounded corners=1mm,
+			draw=blue ]{};
+		\node[fit={(m-3-2.north west) (m-3-5.south east)},
+			thick, inner sep=0pt, rounded corners=1mm,
+			draw=red ]{};
+		\draw (m-1-1.north west) -- (m-1-1.south east);
+		\node[anchor=south west, font=\small] at ($(m-1-1.center) + (-0.2,-0.1)$) {$X_1X_2$};
+		\node[anchor=north east, font=\small] at ($(m-1-1.center) + (-0.2,0.2)$) {$X_0$};
+	\end{tikzpicture}
+
+\end{center}
+% subsection Siatka  (end)
+
+\subsection{Schemat AND, OR, NOT}\label{sub:schemat_and_or_not} % (fold)
+
+% subsection Schemat AND, OR, NOT (end)
+
+\subsection{Symulacja Logisim}\label{sub:symulacja_logisim} % (fold)
+
+% subsection Symulacja Logisim (end)
+
+\subsection{Schemat NAND}\label{sub:schemat_nand} % (fold)
+
+% subsection Schemat NAND (end)
+
+\subsection{Symulacja Logisim NAND}\label{sub:symulacja_logisim_nand} % (fold)
+
+% subsection Symulacja Logisim NAND (end)
+
+\end{document}
