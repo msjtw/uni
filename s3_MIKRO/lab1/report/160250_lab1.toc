@@ -1,0 +1,6 @@
+\babel@toc {polish}{}\relax 
+\contentsline {section}{\numberline {1}Zadanie 1}{1}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Wyjaśnić czym różni się analiza Transient od analizy stałoprądowej DC.}{1}{subsection.1.1}%
+\contentsline {section}{\numberline {2}Zadanie 2}{1}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Przedstawić wyniki symulacyjne oraz wyjaśnić zasadę działania obwodu.}{1}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}aproponować dowolną zmianę w obwodzie. Opisać wprowadzoną zmianę oraz przedstawić dla niej wyniki symulacyjne.}{1}{subsection.2.2}%
