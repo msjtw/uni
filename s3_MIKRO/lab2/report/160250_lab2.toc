@@ -1,0 +1,2 @@
+\babel@toc {polish}{}\relax 
+\contentsline {section}{\numberline {1}Na otrzymanych wynikach symulacji zaznaczyć obszary liniowy oraz nasycenia tranzystora nMOS. W oparciu o wiedzę z podstaw elektroniki podać i omówić stosowne wzory wyjaśniające zasadę działania tranzystora nMOS.}{1}{section.1}%

@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024/Arch Linux) (preloaded format=pdflatex 2024.10.7)  19 OCT 2024 21:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024/Arch Linux) (preloaded format=pdflatex 2024.10.21)  22 OCT 2024 10:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**/home/msjtw/Documents/uni/s3_MIKRO/lab1/report/160250_lab1.tex
-(/home/msjtw/Documents/uni/s3_MIKRO/lab1/report/160250_lab1.tex
+**/home/msjtw/Documents/uni/s3_MIKRO/lab2/report/160250_lab2.tex
+(/home/msjtw/Documents/uni/s3_MIKRO/lab2/report/160250_lab2.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
 (/usr/share/texmf-dist/tex/latex/base/article.cls
@@ -533,33 +533,33 @@ File: l3backend-pdftex.def 2024-02-20 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count297
 \l__pdf_internal_box=\box64
 )
-(/home/msjtw/Documents/uni/s3_MIKRO/lab1/report/160250_lab1.aux)
-\openout1 = `160250_lab1.aux'.
+(/home/msjtw/Documents/uni/s3_MIKRO/lab2/report/160250_lab2.aux)
+\openout1 = `160250_lab2.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-Package hyperref Info: Link coloring ON on input line 28.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+Package hyperref Info: Link coloring ON on input line 29.
 
-(/home/msjtw/Documents/uni/s3_MIKRO/lab1/report/160250_lab1.out)
-(/home/msjtw/Documents/uni/s3_MIKRO/lab1/report/160250_lab1.out)
+(/home/msjtw/Documents/uni/s3_MIKRO/lab2/report/160250_lab2.out)
+(/home/msjtw/Documents/uni/s3_MIKRO/lab2/report/160250_lab2.out)
 \@outlinefile=\write4
-\openout4 = `160250_lab1.out'.
+\openout4 = `160250_lab2.out'.
 
 
 (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -584,68 +584,67 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Trying to load font information for U+msa on input line 31.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 32.
 
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 31.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 32.
 
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-(/home/msjtw/Documents/uni/s3_MIKRO/lab1/report/160250_lab1.toc)
+(/home/msjtw/Documents/uni/s3_MIKRO/lab2/report/160250_lab2.toc)
 \tf@toc=\write5
-\openout5 = `160250_lab1.toc'.
+\openout5 = `160250_lab2.toc'.
 
- [1
+
+Overfull \hbox (7.57193pt too wide) in paragraph at lines 36--36
+\T1/cmr/bx/n/14.4 ob-szary li-niowy oraz na-sy-ce-nia tran-zy-stora nMOS.
+ []
+
+[1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf-dist/fonts
 /enc/dvips/cm-super/cm-super-t1.enc}]
-<images/21_simulation.png, id=47, 1258.7025pt x 1247.66125pt>
-File: images/21_simulation.png Graphic file (type png)
-<use images/21_simulation.png>
-Package pdftex.def Info: images/21_simulation.png  used on input line 49.
-(pdftex.def)             Requested size: 314.67485pt x 311.91455pt.
- [2 </home/msjtw/Documents/uni/s3_MIKRO/lab1/report/images/21_simulation.png>]
-Overfull \hbox (3.28482pt too wide) in paragraph at lines 65--65
-[]\T1/cmr/bx/n/12 Zaproponowa¢ do-woln¡ zmian¦ w ob-wo-dzie. Opi-sa¢ wpro-
- []
-
-<images/22_simulation.png, id=54, 1261.71375pt x 1249.66875pt>
-File: images/22_simulation.png Graphic file (type png)
-<use images/22_simulation.png>
-Package pdftex.def Info: images/22_simulation.png  used on input line 69.
-(pdftex.def)             Requested size: 315.42766pt x 312.41643pt.
-[3 </home/msjtw/Documents/uni/s3_MIKRO/lab1/report/images/22_simulation.png>]
-(/home/msjtw/Documents/uni/s3_MIKRO/lab1/report/160250_lab1.aux)
+(/home/msjtw/Documents/uni/s3_MIKRO/lab2/report/160250_lab2.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
-Package rerunfilecheck Info: File `160250_lab1.out' has not changed.
-(rerunfilecheck)             Checksum: A71A9C0E31EA5F7A88750D791EFE6D2C;1747.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `160250_lab2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `160250_lab2.out':
+(rerunfilecheck)             Before: D864000154F7805F4DE363BF74F9B44C;83
+(rerunfilecheck)             After:  4905816321DCC88B047EF976DB8EC871;1206.
  ) 
 Here is how much of TeX's memory you used:
- 21848 strings out of 475993
- 416333 string characters out of 5790963
- 1933187 words of memory out of 5000000
- 43597 multiletter control sequences out of 15000+600000
- 570437 words of font info for 68 fonts, out of 8000000 for 9000
+ 21809 strings out of 475993
+ 415563 string characters out of 5790962
+ 1930187 words of memory out of 5000000
+ 43567 multiletter control sequences out of 15000+600000
+ 568413 words of font info for 62 fonts, out of 8000000 for 9000
  34 hyphenation exceptions out of 8191
- 84i,7n,93p,770b,450s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,6n,93p,538b,448s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/share/t
-exmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf-dist/fonts
-/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf-dist/fonts/type1/public/c
-m-super/sfrm1095.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm120
-0.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb>
-Output written on /home/msjtw/Documents/uni/s3_MIKRO/lab1/report/160250_lab1.pd
-f (3 pages, 194322 bytes).
+exmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf-dist/fonts
+/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf-dist/fonts/type1/public/c
+m-super/sfrm1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm207
+4.pfb>
+Output written on /home/msjtw/Documents/uni/s3_MIKRO/lab2/report/160250_lab2.pd
+f (1 page, 74532 bytes).
 PDF statistics:
- 93 PDF objects out of 1000 (max. 8388607)
- 73 compressed objects within 1 object stream
- 12 named destinations out of 1000 (max. 500000)
- 63 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 49 PDF objects out of 1000 (max. 8388607)
+ 35 compressed objects within 1 object stream
+ 4 named destinations out of 1000 (max. 500000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
