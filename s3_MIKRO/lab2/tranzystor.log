@@ -1,0 +1,17 @@
+LTspice 24.0.12 for Windows
+Circuit: * Z:\home\msjtw\Documents\uni\s3_MIKRO\lab2\tranzystor.asc
+Start Time: Tue Oct 22 17:00:02 2024
+solver = Normal
+Maximum thread count: 8
+tnom = 27
+temp = 27
+method = modified trap
+.OP point found by inspection.
+.step vgs=0
+.step vgs=1
+.step vgs=2
+.step vgs=3
+.step vgs=4
+.step vgs=5
+Total elapsed time: 0.222 seconds.
+
